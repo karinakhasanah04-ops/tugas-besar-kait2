@@ -8,7 +8,7 @@ const databaseProduk = [
         kategori: "Kaos Polos",
         harga: 55000,
         deskripsi: "Kaos polos hitam esensial dengan potongan reguler. Menggunakan bahan premium 100% Cotton Combed 30s yang sangat adem, lembut, dan menyerap keringat dengan baik.",
-        gambar: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/kaos-hitam.jpg"
     },
     {
         id: 2,
@@ -16,7 +16,7 @@ const databaseProduk = [
         kategori: "Kaos Polos",
         harga: 55000,
         deskripsi: "Kaos polos putih bersih esensial. Ketebalan kain pas, rajutan rapat, dan dijamin tidak menerawang saat digunakan beraktivitas sehari-hari.",
-        gambar: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/kaos-putih.jpg"
     },
     {
         id: 3,
@@ -24,7 +24,7 @@ const databaseProduk = [
         kategori: "Kaos Polos",
         harga: 55000,
         deskripsi: "Kaos polos warna biru dongker (*navy blue*) yang memberikan kesan kasual namun tetap rapi. Mudah dipadupadankan dengan celana jins maupun chino.",
-        gambar: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/kaos-navy.jpg"
     },
     {
         id: 4,
@@ -32,7 +32,7 @@ const databaseProduk = [
         kategori: "Kaos Polos",
         harga: 55000,
         deskripsi: "Kaos polos dengan variasi warna merah muda pastel yang kalem dan trendi. Sangat cocok bagi kamu yang ingin tampil cerah, segar, dan kekinian.",
-        gambar: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/kaos-dustypink.jpg"
     },
     {
         id: 5,
@@ -40,7 +40,7 @@ const databaseProduk = [
         kategori: "Kaos Polo",
         harga: 95000,
         deskripsi: "Kaos kerah minimalis warna hitam pekat. Dibuat menggunakan bahan Premium Cotton Pique rajutan rapi, memberikan kesan tampilan *smart-casual* yang berkelas.",
-        gambar: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/polo-hitam.jpg"
     },
     {
         id: 6,
@@ -48,7 +48,7 @@ const databaseProduk = [
         kategori: "Kaos Polo",
         harga: 95000,
         deskripsi: "Kaos kerah warna biru dongker elegan. Kerah dan manset lengan didesain kokoh serta tidak mudah melar setelah dicuci berkali-kali.",
-        gambar: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/polo-navy.jpg"
     },
     {
         id: 7,
@@ -56,7 +56,7 @@ const databaseProduk = [
         kategori: "Kaos Polo",
         harga: 95000,
         deskripsi: "Kaos kerah berwarna merah marun mewah yang memberikan aura percaya diri dan gagah. Cocok dipakai untuk kuliah, kerja santai, maupun *hangout*.",
-        gambar: "https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/polo-marun.jpg"
     },
     {
         id: 8,
@@ -64,7 +64,7 @@ const databaseProduk = [
         kategori: "Kaos Polo",
         harga: 95000,
         deskripsi: "Kaos kerah warna abu-abu misty (*heather grey*) kasual. Tekstur warna unik yang netral, sangat fleksibel dipasangkan dengan jaket luar atau blazer.",
-        gambar: "https://images.unsplash.com/photo-1625910513397-a400c7776b88?q=80&w=600&auto=format&fit=crop"
+        gambar: "images/polo-abuabu.jpg"
     }
 ];
 
