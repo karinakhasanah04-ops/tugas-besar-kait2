@@ -98,7 +98,7 @@ function tampilkanKatalog(daftarProduk) {
     wadahProduk.innerHTML = "";
 
     if (daftarProduk.length === 0) {
-        wadahProduk.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">Produk tidak ditemukan.</p>`;
+        wadahProduk.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Produk tidak ditemukan.</p>`;
         return;
     }
 
@@ -130,14 +130,12 @@ function filterSistem() {
     const kategoriDipilih = categoryFilter ? categoryFilter.value : "all";
     const urutanHarga = priceSort ? priceSort.value : "default";
 
-    // 1. Filter berdasarkan kata kunci & kategori
     let hasilFilter = databaseProduk.filter(produk => {
         const cocokKataKunci = produk.nama.toLowerCase().includes(kataKunci) || produk.deskripsi.toLowerCase().includes(kataKunci);
         const cocokKategori = (kategoriDipilih === "all") || (produk.kategori === kategoriDipilih);
         return cocokKataKunci && cocokKategori;
     });
 
-    // 2. Sorting / Pengurutan berdasarkan harga
     if (urutanHarga === "low-high") {
         hasilFilter.sort((a, b) => a.harga - b.harga);
     } else if (urutanHarga === "high-low") {
@@ -240,7 +238,6 @@ function simpanDanPerbarui() {
     perbaruiTampilanKeranjang();
 }
 
-// PERHITUNGAN OTOMATIS & RENDER ELEMENT KERANJANG & CHECKOUT
 function perbaruiTampilanKeranjang() {
     const cartCountEl = document.getElementById("cart-count");
     if (cartCountEl) {
@@ -252,23 +249,13 @@ function perbaruiTampilanKeranjang() {
     const wadahRingkasanCheckout = document.getElementById("summary-items");
     const cartTotalPriceEl = document.getElementById("cart-total-price");
 
-    if (wadahItemKeranjang) {
-        wadahItemKeranjang.innerHTML = "";
-    }
-    if (wadahRingkasanCheckout) {
-        wadahRingkasanCheckout.innerHTML = "";
-    }
+    if (wadahItemKeranjang) wadahItemKeranjang.innerHTML = "";
+    if (wadahRingkasanCheckout) wadahRingkasanCheckout.innerHTML = "";
 
     if (keranjangBelanja.length === 0) {
-        if (wadahItemKeranjang) {
-            wadahItemKeranjang.innerHTML = `<p class="empty-cart-msg">Keranjangmu masih kosong.</p>`;
-        }
-        if (wadahRingkasanCheckout) {
-            wadahRingkasanCheckout.innerHTML = `<p class="empty-cart-msg">Belum ada produk yang dipilih.</p>`;
-        }
-        if (cartTotalPriceEl) {
-            cartTotalPriceEl.innerText = "Rp 0";
-        }
+        if (wadahItemKeranjang) wadahItemKeranjang.innerHTML = `<p class="empty-cart-msg">Keranjangmu masih kosong.</p>`;
+        if (wadahRingkasanCheckout) wadahRingkasanCheckout.innerHTML = `<p class="empty-cart-msg">Belum ada produk yang dipilih.</p>`;
+        if (cartTotalPriceEl) cartTotalPriceEl.innerText = "Rp 0";
         updateNotaCheckout(0);
         return;
     }
@@ -279,7 +266,6 @@ function perbaruiTampilanKeranjang() {
         const hargaTotalItem = item.harga * item.jumlah;
         subtotalHarga += hargaTotalItem;
 
-        // Render HTML untuk Sidebar Keranjang
         if (wadahItemKeranjang) {
             const HTMLKeranjang = `
                 <div class="cart-item">
@@ -299,14 +285,13 @@ function perbaruiTampilanKeranjang() {
             wadahItemKeranjang.innerHTML += HTMLKeranjang;
         }
 
-        // Render HTML untuk Ringkasan Pesanan di Checkout (Dengan tombol - + dan Hapus)
         if (wadahRingkasanCheckout) {
             const HTMLRingkasan = `
-                <div class="cart-item" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center;">
+                <div class="cart-item" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f9f3d9; display: flex; gap: 12px; align-items: center;">
                     <img src="${item.gambar}" alt="${item.nama}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 4px;">
                     <div class="cart-item-details" style="flex-grow: 1;">
                         <h4 class="cart-item-title" style="font-size: 13px; font-weight: 600;">${item.nama}</h4>
-                        <p class="cart-item-price" style="font-size: 12px; color: #666;">Rp ${hargaTotalItem.toLocaleString('id-ID')}</p>
+                        <p class="cart-item-price" style="font-size: 12px; color: var(--text-muted);">Rp ${hargaTotalItem.toLocaleString('id-ID')}</p>
                         <div class="cart-qty-controls" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
                             <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, -1)">-</button>
                             <span style="font-size: 13px;">${item.jumlah}</span>
@@ -324,11 +309,9 @@ function perbaruiTampilanKeranjang() {
         cartTotalPriceEl.innerText = `Rp ${subtotalHarga.toLocaleString('id-ID')}`;
     }
     
-    // Panggil kalkulasi lengkap dengan memuat kurir yang terpilih saat ini
     cekMetodePengiriman();
 }
 
-// PERHITUNGAN DISKON OTOMATIS & TOTAL AKHIR DI NOTA CHECKOUT
 function updateNotaCheckout(subtotal) {
     cekMetodePengiriman();
 }
@@ -368,7 +351,6 @@ function processCheckout(event) {
     const kurir = document.getElementById("shipping-method") ? document.getElementById("shipping-method").value : "JNE";
     const metodeBayar = document.getElementById("payment-method") ? document.getElementById("payment-method").value : "Transfer";
 
-    // Hitung biaya subtotal, diskon, dan ongkir untuk pesan WA
     let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
     let biayaOngkir = kurir === "JNT" ? 18000 : (kurir === "GoSend" ? 25000 : 15000);
@@ -379,8 +361,7 @@ function processCheckout(event) {
         daftarItemTeks += `- ${item.nama} (x${item.jumlah}) : Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}\n`;
     });
 
-    // Ganti nomor WhatsApp Admin berikut dengan nomor Anda (format: 628xxxxxxxxxx)
-    const nomorAdminWhatsApp = "6281234567890"; 
+    const nomorAdminWhatsApp = "6289531508088"; 
 
     const pesanWhatsApp = `Halo Admin K-BasicThread Co., saya ingin mengkonfirmasi pesanan saya:%0A%0A` +
         `*Nama Lengkap:* ${namaPelanggan}%0A` +
@@ -394,7 +375,7 @@ function processCheckout(event) {
         `*Total Pembayaran:* Rp ${totalAkhir.toLocaleString('id-ID')}%0A%0A` +
         `Mohon segera diproses ya kak. Terima kasih!`;
 
-    const urlWhatsApp = `https://wa.me/${6289531508088}?text=${pesanWhatsApp}`;
+    const urlWhatsApp = `https://wa.me/${nomorAdminWhatsApp}?text=${pesanWhatsApp}`;
     window.open(urlWhatsApp, '_blank');
 
     keranjangBelanja = [];
@@ -430,25 +411,24 @@ function tampilkanHalaman(halaman) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// FUNGSI MENAMPILKAN ATAU MENYEMBUNYIKAN BARCODE QRIS
 function tampilkanSimulasiQRIS() {
-    const metode = document.getElementById("payment-method").value;
+    const elementMetode = document.getElementById("payment-method");
+    const metode = elementMetode ? elementMetode.value : "";
     const qrisBox = document.getElementById("qris-container");
     
     if (!qrisBox) return;
 
-    if (metode === "QRIS") {
+    if (metode === "QRIS" || metode === "qris") {
         qrisBox.classList.remove("hidden");
     } else {
         qrisBox.classList.add("hidden");
     }
 }
 
-// FUNGSI HITUNG ONGKOS KIRIM
 function cekMetodePengiriman() {
     const kurirEl = document.getElementById("shipping-method");
     const kurir = kurirEl ? kurirEl.value : "JNE";
-    let biayaOngkir = 15000; // Default JNE
+    let biayaOngkir = 15000; 
 
     if (kurir === "JNT") {
         biayaOngkir = 18000;
@@ -464,7 +444,6 @@ function cekMetodePengiriman() {
     updateNotaCheckoutLengkap(subtotal, biayaOngkir);
 }
 
-// PERBARUI NOTA DENGAN ONGKIR & DISKON
 function updateNotaCheckoutLengkap(subtotal, ongkir = 15000) {
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
     let totalAkhir = (subtotal - nilaiDiskon) + ongkir;
