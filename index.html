@@ -4,49 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-BasicThread Co. | Premium Everyday Essentials</title>
-    <!-- Google Fonts untuk tipografi modern -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Link ke file CSS eksternal kita -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- DUMMY GOOGLE ANALYTICS SCRIPT (Syarat Ketentuan Tugas) -->
     <script>
         console.log("Google Analytics Dummy: Mengonfigurasi pelacakan ID UA-209250188-1");
-        console.log("Metrik dipantau: Bounce Rate, Conversion Rate, Cart Abandonment Rate.");
     </script>
 </head>
 <body>
-
     <!-- 1. NAVBAR -->
     <header>
         <nav class="navbar">
-            <div class="logo">K-BasicThread<span>.Co</span></div>
+            <div class="logo" onclick="tampilkanHalaman('home')" style="cursor: pointer;">K-BasicThread<span>.Co</span></div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#katalog">Katalog</a></li>
-                <li><a href="#checkout-section">Checkout</a></li>
+                <li><a href="#" onclick="tampilkanHalaman('home')">Home</a></li>
+                <li><a href="#" onclick="tampilkanHalaman('katalog')">Katalog</a></li>
+                <li><a href="#" onclick="tampilkanHalaman('checkout')">Checkout</a></li>
             </ul>
-            <div class="cart-icon-container" onclick="toggleCart()">
+            <div class="cart-icon-container" onclick="tampilkanHalaman('checkout')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 <span id="cart-count">0</span>
             </div>
         </nav>
     </header>
 
-    <!-- 2. HERO BANNER -->
-    <section id="home" class="hero-banner">
+    <!-- 2. HERO BANNER (TAMPILAN PERTAMA) -->
+    <section id="page-home" class="hero-banner">
         <div class="hero-content">
             <h1>Premium Comfort for Everyday Essentials</h1>
             <p>Dapatkan kaos polos dan polo shirt berkualitas tinggi dengan kenyamanan maksimal untuk aktivitas harianmu.</p>
-            <a href="#katalog" class="btn-primary">Belanja Sekarang</a>
+            <button onclick="tampilkanHalaman('katalog')" class="btn-primary">Belanja Sekarang</button>
         </div>
     </section>
 
-    <!-- MAIN CONTENT -->
-    <main class="container">
-        
-        <!-- 3. FILTER & SEARCH SECTION -->
-        <section id="katalog" class="filter-section">
+    <!-- 3. KATALOG PRODUK (DISEMBUNYIKAN DI AWAL) -->
+    <main id="page-katalog" class="container hidden">
+        <section class="filter-section">
             <h2>Katalog Produk</h2>
             <div class="controls">
                 <input type="text" id="search-input" placeholder="Cari kaos idamanmu...">
@@ -57,15 +49,12 @@
                 </select>
             </div>
         </section>
-
-        <!-- 4. GRID KATALOG PRODUK -->
         <section class="products-grid" id="products-display">
-            <!-- Produk akan dirender secara otomatis lewat JavaScript (app.js) -->
+            <!-- Render produk via JS -->
         </section>
-
     </main>
 
-    <!-- 5. MODAL DETAIL PRODUK -->
+    <!-- 4. MODAL DETAIL PRODUK -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -83,30 +72,10 @@
         </div>
     </div>
 
-    <!-- 6. SIDEBAR KERANJANG BELANJA (CART) -->
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Keranjang Belanja</h3>
-            <span class="close-cart" onclick="toggleCart()">&times;</span>
-        </div>
-        <div id="cart-items-container">
-            <!-- Item belanjaan muncul di sini -->
-            <p class="empty-cart-msg">Keranjangmu masih kosong.</p>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total-row">
-                <span>Total:</span>
-                <span id="cart-total-price">Rp 0</span>
-            </div>
-            <a href="#checkout-section" class="btn-checkout-block" onclick="toggleCart()">Lanjut ke Checkout</a>
-        </div>
-    </div>
-
-    <!-- 7. HALAMAN/FORM CHECKOUT & SIMULASI PAYMENT -->
-    <section id="checkout-section" class="container checkout-section">
+    <!-- 5. HALAMAN CHECKOUT & PEMBAYARAN (DISEMBUNYIKAN DI AWAL) -->
+    <section id="page-checkout" class="container checkout-section hidden">
         <h2>Formulir Checkout & Pembayaran</h2>
         <div class="checkout-wrapper">
-            <!-- Form Alamat & User Data -->
             <form id="checkout-form" onsubmit="processCheckout(event)">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
@@ -127,13 +96,9 @@
                 </div>
                 <button type="submit" class="btn-order">Bayar Sekarang</button>
             </form>
-
-            <!-- Ringkasan Pesanan -->
             <div class="checkout-summary">
                 <h3>Ringkasan Pesanan</h3>
-                <div id="summary-items">
-                    <!-- Daftar ringkasan produk di checkout -->
-                </div>
+                <div id="summary-items"></div>
                 <hr>
                 <div class="summary-row">
                     <span>Subtotal</span>
@@ -151,7 +116,7 @@
         </div>
     </section>
 
-    <!-- 8. FOOTER -->
+    <!-- 6. FOOTER -->
     <footer>
         <div class="footer-content">
             <p>&copy; 2026 <strong>K-BasicThread Co.</strong> - Tugas Besar KAIT II.</p>
@@ -159,7 +124,6 @@
         </div>
     </footer>
 
-    <!-- Link ke logika JavaScript eksternal kita -->
     <script src="js/app.js"></script>
 </body>
 </html>
