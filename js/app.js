@@ -7,6 +7,8 @@ const databaseProduk = [
         nama: "Classic Tee Black",
         kategori: "Kaos Polos",
         harga: 55000,
+        rating: 4.9,
+        terjual: 289,
         deskripsi: "Kaos polos hitam esensial dengan potongan reguler. Menggunakan bahan premium 100% Cotton Combed 30s yang sangat adem, lembut, dan menyerap keringat dengan baik.",
         gambar: "images/kaos-hitam.jpg"
     },
@@ -15,6 +17,8 @@ const databaseProduk = [
         nama: "Classic Tee White",
         kategori: "Kaos Polos",
         harga: 55000,
+        rating: 4.9,
+        terjual: 265,
         deskripsi: "Kaos polos putih bersih esensial. Ketebalan kain pas, rajutan rapat, dan dijamin tidak menerawang saat digunakan beraktivitas sehari-hari.",
         gambar: "images/kaos-putih.jpg"
     },
@@ -23,6 +27,8 @@ const databaseProduk = [
         nama: "Classic Tee Navy",
         kategori: "Kaos Polos",
         harga: 55000,
+        rating: 4.9,
+        terjual: 99,
         deskripsi: "Kaos polos warna biru dongker (navy blue) yang memberikan kesan kasual namun tetap rapi. Mudah dipadupadankan dengan celana jins maupun chino.",
         gambar: "images/kaos-navy.jpg"
     },
@@ -31,6 +37,8 @@ const databaseProduk = [
         nama: "Classic Tee Dusty Pink",
         kategori: "Kaos Polos",
         harga: 55000,
+        rating: 4.9,
+        terjual: 154,
         deskripsi: "Kaos polos dengan variasi warna merah muda pastel yang kalem dan trendi. Sangat cocok bagi kamu yang ingin tampil cerah, segar, dan kekinian.",
         gambar: "images/kaos-dustypink.jpg"
     },
@@ -39,6 +47,8 @@ const databaseProduk = [
         nama: "Premium Polo Black",
         kategori: "Kaos Polo",
         harga: 95000,
+        rating: 4.9,
+        terjual: 287,
         deskripsi: "Kaos kerah minimalis warna hitam pekat. Dibuat menggunakan bahan Premium Cotton Pique rajutan rapi, memberikan kesan tampilan smart-casual yang berkelas.",
         gambar: "images/polo-hitam.jpg"
     },
@@ -47,6 +57,8 @@ const databaseProduk = [
         nama: "Premium Polo Navy",
         kategori: "Kaos Polo",
         harga: 95000,
+        rating: 4.9,
+        terjual: 185,
         deskripsi: "Kaos kerah warna biru dongker elegan. Kerah dan manset lengan didesain kokoh serta tidak mudah melar setelah dicuci berkali-kali.",
         gambar: "images/polo-navy.jpg"
     },
@@ -55,6 +67,8 @@ const databaseProduk = [
         nama: "Premium Polo Maroon",
         kategori: "Kaos Polo",
         harga: 95000,
+        rating: 4.9,
+        terjual: 72,
         deskripsi: "Kaos kerah berwarna merah marun mewah yang memberikan aura percaya diri dan gagah. Cocok dipakai untuk kuliah, kerja santai, maupun hangout.",
         gambar: "images/polo-marun.jpg"
     },
@@ -63,6 +77,8 @@ const databaseProduk = [
         nama: "Premium Polo Heather Grey",
         kategori: "Kaos Polo",
         harga: 95000,
+        rating: 4.9,
+        terjual: 215,
         deskripsi: "Kaos kerah warna abu-abu misty (heather grey) kasual. Tekstur warna unik yang netral, sangat fleksibel dipasangkan dengan jaket luar atau blazer.",
         gambar: "images/polo-abuabu.jpg"
     }
@@ -102,22 +118,34 @@ function tampilkanKatalog(daftarProduk) {
         return;
     }
 
-    daftarProduk.forEach(produk => {
-        const kartuHtml = `
-            <div class="product-card">
-                <div class="product-img-wrapper" onclick="bukaModal(${produk.id})">
-                    <img src="${produk.gambar}" alt="${produk.nama}">
-                </div>
-                <div class="product-info">
-                    <span class="product-category">${produk.kategori}</span>
-                    <h3 class="product-title">${produk.nama}</h3>
-                    <p class="product-price">Rp ${produk.harga.toLocaleString('id-ID')}</p>
-                    <button class="btn-primary" onclick="tambahKeKeranjang(${produk.id})">Tambah Keranjang</button>
-                </div>
+  daftarProduk.forEach(produk => {
+    // Simulasi data rating & terjual (bisa disesuaikan atau ditambah ke databaseProduk)
+    const rating = produk.rating || 4.8; 
+    const terjual = produk.terjual || 120;
+
+    const kartuHtml = `
+        <div class="product-card">
+            <div class="product-img-wrapper" onclick="bukaModal(${produk.id})">
+                <img src="${produk.gambar}" alt="${produk.nama}">
             </div>
-        `;
-        wadahProduk.innerHTML += kartuHtml;
-    });
+            <div class="product-info">
+                <span class="product-category">${produk.kategori}</span>
+                <h3 class="product-title">${produk.nama}</h3>
+                <p class="product-price">Rp ${produk.harga.toLocaleString('id-ID')}</p>
+                
+                <div class="product-meta">
+                    <span class="product-rating">
+                        <i class="star-icon">⭐</i> ${rating}
+                    </span>
+                    <span class="product-sold">| ${terjual} terjual</span>
+                </div>
+
+                <button class="btn-primary" onclick="tambahKeKeranjang(${produk.id})">Tambah Keranjang</button>
+            </div>
+        </div>
+    `;
+    wadahProduk.innerHTML += kartuHtml;
+});
 }
 
 // FUNGSI FILTER, SEARCH, & SORTING HARGA
