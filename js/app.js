@@ -323,21 +323,14 @@ function perbaruiTampilanKeranjang() {
     if (cartTotalPriceEl) {
         cartTotalPriceEl.innerText = `Rp ${subtotalHarga.toLocaleString('id-ID')}`;
     }
-    updateNotaCheckout(subtotalHarga);
+    
+    // Panggil kalkulasi lengkap dengan memuat kurir yang terpilih saat ini
+    cekMetodePengiriman();
 }
 
 // PERHITUNGAN DISKON OTOMATIS & TOTAL AKHIR DI NOTA CHECKOUT
 function updateNotaCheckout(subtotal) {
-    let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
-    let totalAkhir = subtotal - nilaiDiskon;
-
-    const subtotalEl = document.getElementById("summary-subtotal");
-    const discountEl = document.getElementById("summary-discount");
-    const totalEl = document.getElementById("summary-total");
-
-    if (subtotalEl) subtotalEl.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
-    if (discountEl) discountEl.innerText = `- Rp ${nilaiDiskon.toLocaleString('id-ID')}`;
-    if (totalEl) totalEl.innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
+    cekMetodePengiriman();
 }
 
 // ==========================================================================
@@ -360,7 +353,7 @@ function tampilkanNotifikasi(pesan) {
 }
 
 // ==========================================================================
-// VALIDASI FORM & SIMULASI PENYELESAIAN PEMBAYARAN
+// VALIDASI FORM & KONFIRMASI PEMBAYARAN VIA WHATSAPP
 // ==========================================================================
 function processCheckout(event) {
     event.preventDefault();
@@ -372,19 +365,37 @@ function processCheckout(event) {
 
     const namaPelanggan = document.getElementById("nama") ? document.getElementById("nama").value : "Pelanggan";
     const alamatKirim = document.getElementById("alamat") ? document.getElementById("alamat").value : "Alamat";
+    const kurir = document.getElementById("shipping-method") ? document.getElementById("shipping-method").value : "JNE";
     const metodeBayar = document.getElementById("payment-method") ? document.getElementById("payment-method").value : "Transfer";
 
-    alert(`
-        --- SIMULASI MIDTRANS PAYMENT GATEWAY SUCCESS ---
-        
-        Terima kasih, ${namaPelanggan}!
-        Pesanan Anda sedang diproses melalui sistem pembayaran keamanan ${metodeBayar}.
-        
-        Barang akan dikirim ke alamat:
-        ${alamatKirim}
-        
-        [Data Transaksi Sukses Tercatat di LocalStorage & Google Analytics Dummy]
-    `);
+    // Hitung biaya subtotal, diskon, dan ongkir untuk pesan WA
+    let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
+    let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
+    let biayaOngkir = kurir === "JNT" ? 18000 : (kurir === "GoSend" ? 25000 : 15000);
+    let totalAkhir = (subtotal - nilaiDiskon) + biayaOngkir;
+
+    let daftarItemTeks = "";
+    keranjangBelanja.forEach(item => {
+        daftarItemTeks += `- ${item.nama} (x${item.jumlah}) : Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}\n`;
+    });
+
+    // Ganti nomor WhatsApp Admin berikut dengan nomor Anda (format: 628xxxxxxxxxx)
+    const nomorAdminWhatsApp = "6281234567890"; 
+
+    const pesanWhatsApp = `Halo Admin K-BasicThread Co., saya ingin mengkonfirmasi pesanan saya:%0A%0A` +
+        `*Nama Lengkap:* ${namaPelanggan}%0A` +
+        `*Alamat Pengiriman:* ${alamatKirim}%0A` +
+        `*Metode Pengiriman:* ${kurir} (Rp ${biayaOngkir.toLocaleString('id-ID')})%0A` +
+        `*Metode Pembayaran:* ${metodeBayar}%0A%0A` +
+        `*Detail Pesanan:*%0A${encodeURIComponent(daftarItemTeks)}%0A` +
+        `*Subtotal:* Rp ${subtotal.toLocaleString('id-ID')}%0A` +
+        `*Diskon (10%):* -Rp ${nilaiDiskon.toLocaleString('id-ID')}%0A` +
+        `*Ongkir:* Rp ${biayaOngkir.toLocaleString('id-ID')}%0A` +
+        `*Total Pembayaran:* Rp ${totalAkhir.toLocaleString('id-ID')}%0A%0A` +
+        `Mohon segera diproses ya kak. Terima kasih!`;
+
+    const urlWhatsApp = `https://wa.me/${6289531508088}?text=${pesanWhatsApp}`;
+    window.open(urlWhatsApp, '_blank');
 
     keranjangBelanja = [];
     simpanDanPerbarui();
@@ -418,6 +429,7 @@ function tampilkanHalaman(halaman) {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 // FUNGSI MENAMPILKAN ATAU MENYEMBUNYIKAN BARCODE QRIS
 function tampilkanSimulasiQRIS() {
     const metode = document.getElementById("payment-method").value;
@@ -434,7 +446,8 @@ function tampilkanSimulasiQRIS() {
 
 // FUNGSI HITUNG ONGKOS KIRIM
 function cekMetodePengiriman() {
-    const kurir = document.getElementById("shipping-method").value;
+    const kurirEl = document.getElementById("shipping-method");
+    const kurir = kurirEl ? kurirEl.value : "JNE";
     let biayaOngkir = 15000; // Default JNE
 
     if (kurir === "JNT") {
@@ -443,17 +456,12 @@ function cekMetodePengiriman() {
         biayaOngkir = 25000;
     }
 
-    // Update tampilan ongkir di bagian ringkasan/nota jika ada elemennya
-    const ongkirEl = document.getElementById("summary-shipping");
-    if (ongkirEl) {
-        ongkirEl.innerText = `Rp ${biayaOngkir.toLocaleString('id-ID')}`;
-    }
-    
-    // Perbarui total akhir dengan menambah ongkir
+    let subtotal = 0;
     if (typeof keranjangBelanja !== 'undefined' && keranjangBelanja.length > 0) {
-        let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
-        updateNotaCheckoutLengkap(subtotal, biayaOngkir);
+        subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
     }
+
+    updateNotaCheckoutLengkap(subtotal, biayaOngkir);
 }
 
 // PERBARUI NOTA DENGAN ONGKIR & DISKON
