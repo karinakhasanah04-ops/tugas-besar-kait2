@@ -520,3 +520,29 @@ footer strong { color: var(--text-main); }
     transform: translateY(0);
     opacity: 1;
 }
+/* Styling untuk Rating dan Produk Terjual */
+.product-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.star-icon {
+    font-size: 11px;
+}
+
+.product-sold {
+    color: var(--text-muted);
+    font-weight: 500;
+}
