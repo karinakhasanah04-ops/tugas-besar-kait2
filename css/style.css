@@ -403,3 +403,7 @@ footer strong { color: #fff; }
     .modal-content { padding: 20px; }
     .cart-sidebar { width: 100%; right: -100%; }
 }
+
+.hidden {
+    display: none !important;
+}
