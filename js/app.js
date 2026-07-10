@@ -314,3 +314,28 @@ function processCheckout(event) {
     // Mengarahkan tampilan kembali ke halaman katalog atas secara smooth
     window.location.href = "#home";
 }
+// ==========================================================================
+// FUNGSI NAVIGASI ANTAR HALAMAN (HOME, KATALOG, CHECKOUT)
+// ==========================================================================
+function tampilkanHalaman(halaman) {
+    const elHome = document.getElementById("page-home");
+    const elKatalog = document.getElementById("page-katalog");
+    const elCheckout = document.getElementById("page-checkout");
+
+    // Sembunyikan semua halaman terlebih dahulu
+    elHome.classList.add("hidden");
+    elKatalog.classList.add("hidden");
+    elCheckout.classList.add("hidden");
+
+    // Tampilkan halaman yang dipilih
+    if (halaman === 'home') {
+        elHome.classList.remove("hidden");
+    } else if (halaman === 'katalog') {
+        elKatalog.classList.remove("hidden");
+    } else if (halaman === 'checkout') {
+        elCheckout.classList.remove("hidden");
+    }
+
+    // Gulir ke atas secara halus saat berpindah halaman
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
