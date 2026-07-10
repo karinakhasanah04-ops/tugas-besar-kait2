@@ -19,6 +19,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
+    padding-top: 100px; 
 }
 
 a {
@@ -110,7 +111,8 @@ header {
 }
 
 /* ==========================================================================
-   2. HERO BANNER
+/* ==========================================================================
+    2. HERO BANNER
    ========================================================================== */
 .hero-banner {
     height: 70vh;
@@ -123,18 +125,30 @@ header {
     margin-top: 70px;
 }
 
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Memusatkan elemen anak secara horizontal */
+    justify-content: center; /* Memusatkan secara vertikal jika ada ruang */
+    width: 100%;
+    padding: 0 20px;
+}
+
 .hero-content h1 {
     font-size: 42px;
     font-weight: 700;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .hero-content p {
     font-size: 18px;
     margin-bottom: 30px;
     max-width: 600px;
+    text-align: center;      /* Memastikan isi teks rata tengah */
+    margin-left: auto;       /* Trik tambahan agar elemen block benar-benar di tengah */
+    margin-right: auto;
 }
-
 /* ==========================================================================
    3. FILTER & SEARCH
    ========================================================================== */
@@ -376,7 +390,7 @@ footer {
     color: #aaa;
     text-align: center;
     padding: 30px 20px;
-    margin-top: 80px;
+    margin-top: 20px; /* Ubah dari 80px menjadi nilai yang lebih kecil, misalnya 20px atau 30px */
     font-size: 14px;
 }
 footer strong { color: #fff; }
