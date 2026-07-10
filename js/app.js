@@ -1,5 +1,5 @@
 // ==========================================================================
-// DATA KATALOG PRODUK (8 PRODUK DENGAN KATEGORI & WARNA PASTEL JALAN)
+// DATA KATALOG PRODUK (8 PRODUK DENGAN KATEGORI & WARNA)
 // ==========================================================================
 const databaseProduk = [
     {
@@ -23,7 +23,7 @@ const databaseProduk = [
         nama: "Classic Tee Navy",
         kategori: "Kaos Polos",
         harga: 55000,
-        deskripsi: "Kaos polos warna biru dongker (*navy blue*) yang memberikan kesan kasual namun tetap rapi. Mudah dipadupadankan dengan celana jins maupun chino.",
+        deskripsi: "Kaos polos warna biru dongker (navy blue) yang memberikan kesan kasual namun tetap rapi. Mudah dipadupadankan dengan celana jins maupun chino.",
         gambar: "images/kaos-navy.jpg"
     },
     {
@@ -39,7 +39,7 @@ const databaseProduk = [
         nama: "Premium Polo Black",
         kategori: "Kaos Polo",
         harga: 95000,
-        deskripsi: "Kaos kerah minimalis warna hitam pekat. Dibuat menggunakan bahan Premium Cotton Pique rajutan rapi, memberikan kesan tampilan *smart-casual* yang berkelas.",
+        deskripsi: "Kaos kerah minimalis warna hitam pekat. Dibuat menggunakan bahan Premium Cotton Pique rajutan rapi, memberikan kesan tampilan smart-casual yang berkelas.",
         gambar: "images/polo-hitam.jpg"
     },
     {
@@ -55,7 +55,7 @@ const databaseProduk = [
         nama: "Premium Polo Maroon",
         kategori: "Kaos Polo",
         harga: 95000,
-        deskripsi: "Kaos kerah berwarna merah marun mewah yang memberikan aura percaya diri dan gagah. Cocok dipakai untuk kuliah, kerja santai, maupun *hangout*.",
+        deskripsi: "Kaos kerah berwarna merah marun mewah yang memberikan aura percaya diri dan gagah. Cocok dipakai untuk kuliah, kerja santai, maupun hangout.",
         gambar: "images/polo-marun.jpg"
     },
     {
@@ -63,7 +63,7 @@ const databaseProduk = [
         nama: "Premium Polo Heather Grey",
         kategori: "Kaos Polo",
         harga: 95000,
-        deskripsi: "Kaos kerah warna abu-abu misty (*heather grey*) kasual. Tekstur warna unik yang netral, sangat fleksibel dipasangkan dengan jaket luar atau blazer.",
+        deskripsi: "Kaos kerah warna abu-abu misty (heather grey) kasual. Tekstur warna unik yang netral, sangat fleksibel dipasangkan dengan jaket luar atau blazer.",
         gambar: "images/polo-abuabu.jpg"
     }
 ];
@@ -78,9 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
     tampilkanKatalog(databaseProduk);
     perbaruiTampilanKeranjang();
 
-    // Event Listener Filter Kategori & Pencarian
-    document.getElementById("search-input").addEventListener("input", filterSistem);
-    document.getElementById("category-filter").addEventListener("change", filterSistem);
+    // Event Listener Filter Kategori & Pencarian (Opsional jika elemen tersedia di HTML)
+    const searchInput = document.getElementById("search-input");
+    const categoryFilter = document.getElementById("category-filter");
+    
+    if (searchInput) searchInput.addEventListener("input", filterSistem);
+    if (categoryFilter) categoryFilter.addEventListener("change", filterSistem);
 });
 
 // ==========================================================================
@@ -88,6 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================================================================
 function tampilkanKatalog(daftarProduk) {
     const wadahProduk = document.getElementById("products-display");
+    if (!wadahProduk) return;
+    
     wadahProduk.innerHTML = "";
 
     if (daftarProduk.length === 0) {
@@ -113,10 +118,13 @@ function tampilkanKatalog(daftarProduk) {
     });
 }
 
-// FUNGSI FILTER DAN SEARCH (DIPANGGIL SETIAP INPUT BERUBAH)
+// FUNGSI FILTER DAN SEARCH
 function filterSistem() {
-    const kataKunci = document.getElementById("search-input").value.toLowerCase();
-    const kategoriDipilih = document.getElementById("category-filter").value;
+    const searchInput = document.getElementById("search-input");
+    const categoryFilter = document.getElementById("category-filter");
+    
+    const kataKunci = searchInput ? searchInput.value.toLowerCase() : "";
+    const kategoriDipilih = categoryFilter ? categoryFilter.value : "all";
 
     const hasilFilter = databaseProduk.filter(produk => {
         const cocokKataKunci = produk.nama.toLowerCase().includes(kataKunci) || produk.deskripsi.toLowerCase().includes(kataKunci);
@@ -134,25 +142,33 @@ function bukaModal(idProduk) {
     const produk = databaseProduk.find(p => p.id === idProduk);
     if (!produk) return;
 
-    document.getElementById("modal-img").src = produk.gambar;
-    document.getElementById("modal-title").innerText = produk.nama;
-    document.getElementById("modal-price").innerText = `Rp ${produk.harga.toLocaleString('id-ID')}`;
-    document.getElementById("modal-desc").innerText = produk.deskripsi;
-    
-    // Set fungsi onclick tombol di dalam modal
-    document.getElementById("modal-add-btn").onclick = () => {
-        tambahKeKeranjang(produk.id);
-        closeModal();
-    };
+    const modalImg = document.getElementById("modal-img");
+    const modalTitle = document.getElementById("modal-title");
+    const modalPrice = document.getElementById("modal-price");
+    const modalDesc = document.getElementById("modal-desc");
+    const modalAddBtn = document.getElementById("modal-add-btn");
 
-    document.getElementById("product-modal").style.display = "flex";
+    if (modalImg) modalImg.src = produk.gambar;
+    if (modalTitle) modalTitle.innerText = produk.nama;
+    if (modalPrice) modalPrice.innerText = `Rp ${produk.harga.toLocaleString('id-ID')}`;
+    if (modalDesc) modalDesc.innerText = produk.deskripsi;
+    
+    if (modalAddBtn) {
+        modalAddBtn.onclick = () => {
+            tambahKeKeranjang(produk.id);
+            closeModal();
+        };
+    }
+
+    const productModal = document.getElementById("product-modal");
+    if (productModal) productModal.style.display = "flex";
 }
 
 function closeModal() {
-    document.getElementById("product-modal").style.display = "none";
+    const productModal = document.getElementById("product-modal");
+    if (productModal) productModal.style.display = "none";
 }
 
-// Menutup modal jika user klik area luar modal
 window.onclick = function(event) {
     const modal = document.getElementById("product-modal");
     if (event.target === modal) {
@@ -164,11 +180,14 @@ window.onclick = function(event) {
 // MANAJEMEN KERANJANG BELANJA & LOCALSTORAGE
 // ==========================================================================
 function toggleCart() {
-    document.getElementById("cart-sidebar").classList.toggle("open");
+    const cartSidebar = document.getElementById("cart-sidebar");
+    if (cartSidebar) cartSidebar.classList.toggle("open");
 }
 
 function tambahKeKeranjang(idProduk) {
     const produkPilihan = databaseProduk.find(p => p.id === idProduk);
+    if (!produkPilihan) return;
+
     const itemDiKeranjang = keranjangBelanja.find(item => item.id === idProduk);
 
     if (itemDiKeranjang) {
@@ -204,27 +223,39 @@ function hapusItemDariKeranjang(idProduk) {
 }
 
 function simpanDanPerbarui() {
-    // Menyimpan data array keranjang belanja ke localStorage (Syarat Wajib)
     localStorage.setItem('K_BASIC_CART', JSON.stringify(keranjangBelanja));
     perbaruiTampilanKeranjang();
 }
 
-// PERHITUNGAN OTOMATIS & RENDER ELEMENT KERANJANG
+// PERHITUNGAN OTOMATIS & RENDER ELEMENT KERANJANG & CHECKOUT
 function perbaruiTampilanKeranjang() {
-    // Update lingkaran jumlah item di navbar
-    const totalItem = keranjangBelanja.reduce((sum, item) => sum + item.jumlah, 0);
-    document.getElementById("cart-count").innerText = totalItem;
+    const cartCountEl = document.getElementById("cart-count");
+    if (cartCountEl) {
+        const totalItem = keranjangBelanja.reduce((sum, item) => sum + item.jumlah, 0);
+        cartCountEl.innerText = totalItem;
+    }
 
     const wadahItemKeranjang = document.getElementById("cart-items-container");
     const wadahRingkasanCheckout = document.getElementById("summary-items");
+    const cartTotalPriceEl = document.getElementById("cart-total-price");
 
-    // Reset isi keranjang dan checkout
-    wadahItemKeranjang.innerHTML = "";
-    wadahRingkasanCheckout.innerHTML = "";
+    if (wadahItemKeranjang) {
+        wadahItemKeranjang.innerHTML = "";
+    }
+    if (wadahRingkasanCheckout) {
+        wadahRingkasanCheckout.innerHTML = "";
+    }
 
     if (keranjangBelanja.length === 0) {
-        wadahItemKeranjang.innerHTML = `<p class="empty-cart-msg">Keranjangmu masih kosong.</p>`;
-        document.getElementById("cart-total-price").innerText = "Rp 0";
+        if (wadahItemKeranjang) {
+            wadahItemKeranjang.innerHTML = `<p class="empty-cart-msg">Keranjangmu masih kosong.</p>`;
+        }
+        if (wadahRingkasanCheckout) {
+            wadahRingkasanCheckout.innerHTML = `<p class="empty-cart-msg">Belum ada produk yang dipilih.</p>`;
+        }
+        if (cartTotalPriceEl) {
+            cartTotalPriceEl.innerText = "Rp 0";
+        }
         updateNotaCheckout(0);
         return;
     }
@@ -236,64 +267,81 @@ function perbaruiTampilanKeranjang() {
         subtotalHarga += hargaTotalItem;
 
         // Render HTML untuk Sidebar Keranjang
-        const HTMLKeranjang = `
-            <div class="cart-item">
-                <img src="${item.gambar}" alt="${item.nama}" class="cart-item-img">
-                <div class="cart-item-details">
-                    <h4 class="cart-item-title">${item.nama}</h4>
-                    <p class="cart-item-price">Rp ${item.harga.toLocaleString('id-ID')} x ${item.jumlah}</p>
-                    <div class="cart-qty-controls">
-                        <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, -1)">-</button>
-                        <span>${item.jumlah}</span>
-                        <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, 1)">+</button>
+        if (wadahItemKeranjang) {
+            const HTMLKeranjang = `
+                <div class="cart-item">
+                    <img src="${item.gambar}" alt="${item.nama}" class="cart-item-img">
+                    <div class="cart-item-details">
+                        <h4 class="cart-item-title">${item.nama}</h4>
+                        <p class="cart-item-price">Rp ${item.harga.toLocaleString('id-ID')} x ${item.jumlah}</p>
+                        <div class="cart-qty-controls">
+                            <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, -1)">-</button>
+                            <span>${item.jumlah}</span>
+                            <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, 1)">+</button>
+                        </div>
+                        <button class="remove-item-btn" onclick="hapusItemDariKeranjang(${item.id})">Hapus</button>
                     </div>
-                    <button class="remove-item-btn" onclick="hapusItemDariKeranjang(${item.id})">Hapus</button>
                 </div>
-            </div>
-        `;
-        wadahItemKeranjang.innerHTML += HTMLKeranjang;
+            `;
+            wadahItemKeranjang.innerHTML += HTMLKeranjang;
+        }
 
-        // Render HTML untuk List Ringkasan Pesanan di bagian Checkout
-        const HTMLRingkasan = `
-            <div class="summary-row">
-                <span>${item.nama} (x${item.jumlah})</span>
-                <span>Rp ${hargaTotalItem.toLocaleString('id-ID')}</span>
-            </div>
-        `;
-        wadahRingkasanCheckout.innerHTML += HTMLRingkasan;
+        // Render HTML untuk Ringkasan Pesanan di Checkout (Dilengkapi Tombol - + dan Hapus)
+        if (wadahRingkasanCheckout) {
+            const HTMLRingkasan = `
+                <div class="cart-item" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center;">
+                    <img src="${item.gambar}" alt="${item.nama}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 4px;">
+                    <div class="cart-item-details" style="flex-grow: 1;">
+                        <h4 class="cart-item-title" style="font-size: 13px; font-weight: 600;">${item.nama}</h4>
+                        <p class="cart-item-price" style="font-size: 12px; color: #666;">Rp ${hargaTotalItem.toLocaleString('id-ID')}</p>
+                        <div class="cart-qty-controls" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                            <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, -1)">-</button>
+                            <span style="font-size: 13px;">${item.jumlah}</span>
+                            <button class="cart-qty-btn" onclick="ubahJumlahItem(${item.id}, 1)">+</button>
+                            <button class="remove-item-btn" onclick="hapusItemDariKeranjang(${item.id})" style="margin-left: auto;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            wadahRingkasanCheckout.innerHTML += HTMLRingkasan;
+        }
     });
 
-    document.getElementById("cart-total-price").innerText = `Rp ${subtotalHarga.toLocaleString('id-ID')}`;
+    if (cartTotalPriceEl) {
+        cartTotalPriceEl.innerText = `Rp ${subtotalHarga.toLocaleString('id-ID')}`;
+    }
     updateNotaCheckout(subtotalHarga);
 }
 
 // PERHITUNGAN DISKON OTOMATIS & TOTAL AKHIR DI NOTA CHECKOUT
 function updateNotaCheckout(subtotal) {
-    // Strategi Promosi: Diskon 10% untuk simulasi transaksi pertama (Syarat Aspek Bisnis)
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
     let totalAkhir = subtotal - nilaiDiskon;
 
-    document.getElementById("summary-subtotal").innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
-    document.getElementById("summary-discount").innerText = `- Rp ${nilaiDiskon.toLocaleString('id-ID')}`;
-    document.getElementById("summary-total").innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
+    const subtotalEl = document.getElementById("summary-subtotal");
+    const discountEl = document.getElementById("summary-discount");
+    const totalEl = document.getElementById("summary-total");
+
+    if (subtotalEl) subtotalEl.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+    if (discountEl) discountEl.innerText = `- Rp ${nilaiDiskon.toLocaleString('id-ID')}`;
+    if (totalEl) totalEl.innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
 }
 
 // ==========================================================================
-// VALIDASI FORM & SIMULASI PENYELESAIAN PEMBAYARAN (PAYMENT GATEWAY)
+// VALIDASI FORM & SIMULASI PENYELESAIAN PEMBAYARAN
 // ==========================================================================
 function processCheckout(event) {
-    event.preventDefault(); // Mencegah reload halaman saat klik submit
+    event.preventDefault();
 
     if (keranjangBelanja.length === 0) {
         alert("Gagal melakukan checkout! Keranjang belanja Anda masih kosong.");
         return;
     }
 
-    const namaPelanggan = document.getElementById("nama").value;
-    const alamatKirim = document.getElementById("alamat").value;
-    const metodeBayar = document.getElementById("payment-method").value;
+    const namaPelanggan = document.getElementById("nama") ? document.getElementById("nama").value : "Pelanggan";
+    const alamatKirim = document.getElementById("alamat") ? document.getElementById("alamat").value : "Alamat";
+    const metodeBayar = document.getElementById("payment-method") ? document.getElementById("payment-method").value : "Transfer";
 
-    // Simulasi Pengiriman Payload Informasi Ke API Midtrans Sandbox/Dummy
     alert(`
         --- SIMULASI MIDTRANS PAYMENT GATEWAY SUCCESS ---
         
@@ -306,14 +354,15 @@ function processCheckout(event) {
         [Data Transaksi Sukses Tercatat di LocalStorage & Google Analytics Dummy]
     `);
 
-    // Reset keranjang setelah transaksi sukses selesai dilakukan
     keranjangBelanja = [];
     simpanDanPerbarui();
-    document.getElementById("checkout-form").reset();
     
-    // Mengarahkan tampilan kembali ke halaman katalog atas secara smooth
-    window.location.href = "#home";
+    const formEl = document.getElementById("checkout-form");
+    if (formEl) formEl.reset();
+    
+    tampilkanHalaman('home');
 }
+
 // ==========================================================================
 // FUNGSI NAVIGASI ANTAR HALAMAN (HOME, KATALOG, CHECKOUT)
 // ==========================================================================
@@ -322,20 +371,19 @@ function tampilkanHalaman(halaman) {
     const elKatalog = document.getElementById("page-katalog");
     const elCheckout = document.getElementById("page-checkout");
 
-    // Sembunyikan semua halaman terlebih dahulu
-    elHome.classList.add("hidden");
-    elKatalog.classList.add("hidden");
-    elCheckout.classList.add("hidden");
+    if (elHome) elHome.classList.add("hidden");
+    if (elKatalog) elKatalog.classList.add("hidden");
+    if (elCheckout) elCheckout.classList.add("hidden");
 
-    // Tampilkan halaman yang dipilih
     if (halaman === 'home') {
-        elHome.classList.remove("hidden");
+        if (elHome) elHome.classList.remove("hidden");
     } else if (halaman === 'katalog') {
-        elKatalog.classList.remove("hidden");
+        if (elKatalog) elKatalog.classList.remove("hidden");
     } else if (halaman === 'checkout') {
-        elCheckout.classList.remove("hidden");
+        if (elCheckout) elCheckout.classList.remove("hidden");
+        // Pastikan ringkasan checkout diperbarui setiap kali halaman checkout dibuka
+        perbaruiTampilanKeranjang();
     }
 
-    // Gulir ke atas secara halus saat berpindah halaman
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
