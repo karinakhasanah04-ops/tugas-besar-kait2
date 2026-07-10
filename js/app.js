@@ -78,12 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
     tampilkanKatalog(databaseProduk);
     perbaruiTampilanKeranjang();
 
-    // Event Listener Filter Kategori & Pencarian (Opsional jika elemen tersedia di HTML)
+    // Event Listener Filter Kategori, Pencarian, & Urutan Harga
     const searchInput = document.getElementById("search-input");
     const categoryFilter = document.getElementById("category-filter");
+    const priceSort = document.getElementById("price-sort");
     
     if (searchInput) searchInput.addEventListener("input", filterSistem);
     if (categoryFilter) categoryFilter.addEventListener("change", filterSistem);
+    if (priceSort) priceSort.addEventListener("change", filterSistem);
 });
 
 // ==========================================================================
@@ -118,19 +120,29 @@ function tampilkanKatalog(daftarProduk) {
     });
 }
 
-// FUNGSI FILTER DAN SEARCH
+// FUNGSI FILTER, SEARCH, & SORTING HARGA
 function filterSistem() {
     const searchInput = document.getElementById("search-input");
     const categoryFilter = document.getElementById("category-filter");
+    const priceSort = document.getElementById("price-sort");
     
     const kataKunci = searchInput ? searchInput.value.toLowerCase() : "";
     const kategoriDipilih = categoryFilter ? categoryFilter.value : "all";
+    const urutanHarga = priceSort ? priceSort.value : "default";
 
-    const hasilFilter = databaseProduk.filter(produk => {
+    // 1. Filter berdasarkan kata kunci & kategori
+    let hasilFilter = databaseProduk.filter(produk => {
         const cocokKataKunci = produk.nama.toLowerCase().includes(kataKunci) || produk.deskripsi.toLowerCase().includes(kataKunci);
         const cocokKategori = (kategoriDipilih === "all") || (produk.kategori === kategoriDipilih);
         return cocokKataKunci && cocokKategori;
     });
+
+    // 2. Sorting / Pengurutan berdasarkan harga
+    if (urutanHarga === "low-high") {
+        hasilFilter.sort((a, b) => a.harga - b.harga);
+    } else if (urutanHarga === "high-low") {
+        hasilFilter.sort((a, b) => b.harga - a.harga);
+    }
 
     tampilkanKatalog(hasilFilter);
 }
@@ -203,6 +215,7 @@ function tambahKeKeranjang(idProduk) {
     }
 
     simpanDanPerbarui();
+    tampilkanNotifikasi(`"${produkPilihan.nama}" berhasil masuk keranjang!`);
 }
 
 function ubahJumlahItem(idProduk, perubahan) {
@@ -286,7 +299,7 @@ function perbaruiTampilanKeranjang() {
             wadahItemKeranjang.innerHTML += HTMLKeranjang;
         }
 
-        // Render HTML untuk Ringkasan Pesanan di Checkout (Dilengkapi Tombol - + dan Hapus)
+        // Render HTML untuk Ringkasan Pesanan di Checkout (Dengan tombol - + dan Hapus)
         if (wadahRingkasanCheckout) {
             const HTMLRingkasan = `
                 <div class="cart-item" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center;">
@@ -325,6 +338,25 @@ function updateNotaCheckout(subtotal) {
     if (subtotalEl) subtotalEl.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
     if (discountEl) discountEl.innerText = `- Rp ${nilaiDiskon.toLocaleString('id-ID')}`;
     if (totalEl) totalEl.innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
+}
+
+// ==========================================================================
+// TOAST NOTIFIKASI
+// ==========================================================================
+function tampilkanNotifikasi(pesan) {
+    const toast = document.getElementById("toast-notification");
+    const toastMsg = document.getElementById("toast-message");
+    
+    if (!toast || !toastMsg) return;
+    
+    toastMsg.innerText = pesan;
+    toast.classList.remove("toast-hidden");
+    toast.classList.add("toast-show");
+    
+    setTimeout(() => {
+        toast.classList.remove("toast-show");
+        toast.classList.add("toast-hidden");
+    }, 2500);
 }
 
 // ==========================================================================
@@ -381,9 +413,61 @@ function tampilkanHalaman(halaman) {
         if (elKatalog) elKatalog.classList.remove("hidden");
     } else if (halaman === 'checkout') {
         if (elCheckout) elCheckout.classList.remove("hidden");
-        // Pastikan ringkasan checkout diperbarui setiap kali halaman checkout dibuka
         perbaruiTampilanKeranjang();
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+// FUNGSI MENAMPILKAN ATAU MENYEMBUNYIKAN BARCODE QRIS
+function tampilkanSimulasiQRIS() {
+    const metode = document.getElementById("payment-method").value;
+    const qrisBox = document.getElementById("qris-container");
+    
+    if (!qrisBox) return;
+
+    if (metode === "QRIS") {
+        qrisBox.classList.remove("hidden");
+    } else {
+        qrisBox.classList.add("hidden");
+    }
+}
+
+// FUNGSI HITUNG ONGKOS KIRIM
+function cekMetodePengiriman() {
+    const kurir = document.getElementById("shipping-method").value;
+    let biayaOngkir = 15000; // Default JNE
+
+    if (kurir === "JNT") {
+        biayaOngkir = 18000;
+    } else if (kurir === "GoSend") {
+        biayaOngkir = 25000;
+    }
+
+    // Update tampilan ongkir di bagian ringkasan/nota jika ada elemennya
+    const ongkirEl = document.getElementById("summary-shipping");
+    if (ongkirEl) {
+        ongkirEl.innerText = `Rp ${biayaOngkir.toLocaleString('id-ID')}`;
+    }
+    
+    // Perbarui total akhir dengan menambah ongkir
+    if (typeof keranjangBelanja !== 'undefined' && keranjangBelanja.length > 0) {
+        let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
+        updateNotaCheckoutLengkap(subtotal, biayaOngkir);
+    }
+}
+
+// PERBARUI NOTA DENGAN ONGKIR & DISKON
+function updateNotaCheckoutLengkap(subtotal, ongkir = 15000) {
+    let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
+    let totalAkhir = (subtotal - nilaiDiskon) + ongkir;
+
+    const subtotalEl = document.getElementById("summary-subtotal");
+    const discountEl = document.getElementById("summary-discount");
+    const shippingEl = document.getElementById("summary-shipping");
+    const totalEl = document.getElementById("summary-total");
+
+    if (subtotalEl) subtotalEl.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+    if (discountEl) discountEl.innerText = `- Rp ${nilaiDiskon.toLocaleString('id-ID')}`;
+    if (shippingEl) shippingEl.innerText = `Rp ${ongkir.toLocaleString('id-ID')}`;
+    if (totalEl) totalEl.innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
 }
