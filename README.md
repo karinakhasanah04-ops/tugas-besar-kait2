@@ -17,22 +17,28 @@ Final Project Mata Kuliah: KAIT II (Administrasi Bisnis 2025/2026)
 * **Strategi K-BasicThread Co:** Mengambil posisi di tengah—kualitas mendekati brand retail besar, namun dengan harga lokal yang kompetitif dan pengalaman belanja website yang sangat mudah.
 
 ## 4. Manajemen Produk & Strategi Harga
-| No | Kategori | Nama Produk | Harga | Deskripsi Singkat |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | Kaos Polos | Classic Tee Black | Rp 55.000 | Kaos polos hitam, 100% Cotton Combed 30s. |
-| 2 | Kaos Polos | Classic Tee White | Rp 55.000 | Kaos polos putih bersih, bahan tebal tidak menerawang. |
-| 3 | Kaos Polos | Classic Tee Navy | Rp 55.000 | Kaos polos warna biru dongker, cocok untuk santai. |
-| 4 | Kaos Polos | Classic Tee Dusty Pink | Rp 55.000 | Kaos polos merah muda kalem, tren warna pastel. |
-| 5 | Kaos Polo | Premium Polo Black | Rp 95.000 | Kaos kerah hitam, bahan Cotton Pique rajutan rapi. |
-| 6 | Kaos Polo | Premium Polo Navy | Rp 95.000 | Kaos kerah biru dongker, tampilan smart-casual. |
-| 7 | Kaos Polo | Premium Polo Maroon | Rp 95.000 | Kaos kerah merah marun, memberikan kesan elegan. |
-| 8 | Kaos Polo | Premium Polo Heather Grey | Rp 95.000 | Kaos kerah abu-abu misty, kasual namun tetap rapi. |
+* **Katalog Produk Dinamis (Sinkronisasi LocalStorage):** Data produk dikelola secara terpusat dan dapat diperbarui secara *real-time* melalui panel administrasi (*Admin Dashboard*), yang otomatis mencakup sinkronisasi nama, kategori, harga, stok, deskripsi, jumlah terjual, dan rating produk.
+* **Daftar Produk Awal (Default Database):**
+
+| No | Kategori | Nama Produk | Harga | Stok | Deskripsi Singkat |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Kaos Polos | Classic Tee Black | Rp 55.000 | 20 | Kaos polos hitam, 100% Cotton Combed 30s. |
+| 2 | Kaos Polos | Classic Tee White | Rp 55.000 | 25 | Kaos polos putih bersih, bahan tebal tidak menerawang. |
+| 3 | Kaos Polos | Classic Tee Navy | Rp 55.000 | 31 | Kaos polos warna biru dongker, cocok untuk santai. |
+| 4 | Kaos Polos | Classic Tee Dusty Pink | Rp 55.000 | 27 | Kaos polos merah muda kalem, tren warna pastel. |
+| 5 | Kaos Polo | Premium Polo Black | Rp 95.000 | 26 | Kaos kerah hitam, bahan Cotton Pique rajutan rapi. |
+| 6 | Kaos Polo | Premium Polo Navy | Rp 95.000 | 28 | Kaos kerah biru dongker, tampilan smart-casual. |
+| 7 | Kaos Polo | Premium Polo Maroon | Rp 95.000 | 29 | Kaos kerah merah marun, memberikan kesan elegan. |
+| 8 | Kaos Polo | Premium Polo Heather Grey | Rp 95.000 | 22 | Kaos kerah abu-abu misty, kasual namun tetap rapi. |
 
 * **Strategi Promosi:** Diskon otomatis sebesar 10% untuk pengguna baru pada simulasi checkout pertama.
 
-## 5. Alur Transaksi, Keamanan, & Google Analytics (Simulasi)
-* **Payment Gateway:** Simulasi integrasi menggunakan Midtrans Dummy / Sandbox. Saat checkout, pelanggan mengisi form alamat, memilih metode pembayaran (Transfer Bank/E-Wallet), dan dialihkan ke halaman simulasi sukses.
-* **Rencana Data Analytics:** Menyertakan script pelacak dummy untuk memantau metrik performa toko:
+## 5. Alur Transaksi, Manajemen Stok, & Integrasi Sistem
+* **Metode Pengiriman:** Pelanggan dapat memilih opsi kurir pengiriman langsung pada form checkout (JNE Reguler - Rp 15.000, JNT Express - Rp 18.000, atau GoSend - Rp 25.000) yang secara otomatis memperbarui total tagihan pembayaran.
+* **Payment Gateway & Simulasi QRIS:** Menyediakan berbagai pilihan metode pembayaran seperti Transfer Bank serta fitur interaktif simulasi scan barcode QRIS yang akan muncul secara dinamis jika metode QRIS dipilih.
+* **Manajemen Inventaris Otomatis:** Ketika transaksi diselesaikan oleh pelanggan, sistem secara otomatis mengurangi jumlah ketersediaan stok produk dan menambahkan akumulasi jumlah produk terjual yang langsung diperbarui pada katalog utama serta dashboard admin.
+* **Konfirmasi Pesanan via WhatsApp:** Setelah menekan tombol **"Konfirmasi Pesanan"**, sistem JavaScript secara otomatis memvalidasi data, memperbarui data inventaris lokal, dan mengarahkan pelanggan ke web/aplikasi WhatsApp dengan format pesan pesanan terstruktur ke nomor admin.
+* **Rencana Data Analytics:** Menyertakan indikator pelacakan untuk memantau metrik performa toko:
   * **Conversion Rate:** Berapa persen pengunjung website yang akhirnya melakukan pembelian.
   * **Bounce Rate:** Mengukur persentase pengunjung yang langsung keluar setelah membuka halaman pertama (target < 40%).
   * **Shopping Cart Abandonment Rate:** Melacak pengguna yang memasukkan barang ke keranjang tetapi tidak melakukan checkout.
