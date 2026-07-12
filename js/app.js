@@ -1,88 +1,99 @@
 // ==========================================================================
-// DATA KATALOG PRODUK (8 PRODUK DENGAN KATEGORI & WARNA)
+// DATA KATALOG PRODUK (Mengecek localStorage / Admin Dashboard terlebih dahulu)
 // ==========================================================================
-const databaseProduk = [
+const defaultDatabaseProduk = [
     {
         id: 1,
         nama: "Classic Tee Black",
         kategori: "Kaos Polos",
         harga: 55000,
-        rating: 4.9,
-        terjual: 289,
         deskripsi: "Kaos polos hitam esensial dengan potongan reguler. Menggunakan bahan premium 100% Cotton Combed 30s yang sangat adem, lembut, dan menyerap keringat dengan baik.",
-        gambar: "images/kaos-hitam.jpg"
+        gambar: "images/kaos-hitam.jpg",
+        rating: 4.8,
+        terjual: 145,
+        stok: 20
     },
     {
         id: 2,
         nama: "Classic Tee White",
         kategori: "Kaos Polos",
         harga: 55000,
-        rating: 4.9,
-        terjual: 265,
         deskripsi: "Kaos polos putih bersih esensial. Ketebalan kain pas, rajutan rapat, dan dijamin tidak menerawang saat digunakan beraktivitas sehari-hari.",
-        gambar: "images/kaos-putih.jpg"
+        gambar: "images/kaos-putih.jpg",
+        rating: 4.7,
+        terjual: 210,
+        stok: 25
     },
     {
         id: 3,
         nama: "Classic Tee Navy",
         kategori: "Kaos Polos",
         harga: 55000,
-        rating: 4.9,
-        terjual: 99,
         deskripsi: "Kaos polos warna biru dongker (navy blue) yang memberikan kesan kasual namun tetap rapi. Mudah dipadupadankan dengan celana jins maupun chino.",
-        gambar: "images/kaos-navy.jpg"
+        gambar: "images/kaos-navy.jpg",
+        rating: 4.9,
+        terjual: 180,
+        stok: 31
     },
     {
         id: 4,
         nama: "Classic Tee Dusty Pink",
         kategori: "Kaos Polos",
         harga: 55000,
-        rating: 4.9,
-        terjual: 154,
         deskripsi: "Kaos polos dengan variasi warna merah muda pastel yang kalem dan trendi. Sangat cocok bagi kamu yang ingin tampil cerah, segar, dan kekinian.",
-        gambar: "images/kaos-dustypink.jpg"
+        gambar: "images/kaos-dustypink.jpg",
+        rating: 4.6,
+        terjual: 95,
+        stok: 27
     },
     {
         id: 5,
         nama: "Premium Polo Black",
         kategori: "Kaos Polo",
         harga: 95000,
-        rating: 4.9,
-        terjual: 287,
         deskripsi: "Kaos kerah minimalis warna hitam pekat. Dibuat menggunakan bahan Premium Cotton Pique rajutan rapi, memberikan kesan tampilan smart-casual yang berkelas.",
-        gambar: "images/polo-hitam.jpg"
+        gambar: "images/polo-hitam.jpg",
+        rating: 4.9,
+        terjual: 130,
+        stok: 26
     },
     {
         id: 6,
         nama: "Premium Polo Navy",
         kategori: "Kaos Polo",
         harga: 95000,
-        rating: 4.9,
-        terjual: 185,
         deskripsi: "Kaos kerah warna biru dongker elegan. Kerah dan manset lengan didesain kokoh serta tidak mudah melar setelah dicuci berkali-kali.",
-        gambar: "images/polo-navy.jpg"
+        gambar: "images/polo-navy.jpg",
+        rating: 4.8,
+        terjual: 115,
+        stok: 28
     },
     {
         id: 7,
         nama: "Premium Polo Maroon",
         kategori: "Kaos Polo",
         harga: 95000,
-        rating: 4.9,
-        terjual: 72,
         deskripsi: "Kaos kerah berwarna merah marun mewah yang memberikan aura percaya diri dan gagah. Cocok dipakai untuk kuliah, kerja santai, maupun hangout.",
-        gambar: "images/polo-marun.jpg"
+        gambar: "images/polo-marun.jpg",
+        rating: 4.7,
+        terjual: 88,
+        stok: 29
     },
     {
         id: 8,
         nama: "Premium Polo Heather Grey",
         kategori: "Kaos Polo",
         harga: 95000,
-        rating: 4.9,
-        terjual: 215,
         deskripsi: "Kaos kerah warna abu-abu misty (heather grey) kasual. Tekstur warna unik yang netral, sangat fleksibel dipasangkan dengan jaket luar atau blazer.",
-        gambar: "images/polo-abuabu.jpg"
+        gambar: "images/polo-abuabu.jpg",
+        rating: 5.0,
+        terjual: 160,
+        stok: 22
     }
 ];
+
+// Inisialisasi variabel database yang mengambil data dari localStorage jika ada pembaruan admin
+let databaseProduk = JSON.parse(localStorage.getItem("katalogProduk")) || defaultDatabaseProduk;
 
 // STATE APLIKASI (Mengambil data keranjang dari localStorage jika ada)
 let keranjangBelanja = JSON.parse(localStorage.getItem('K_BASIC_CART')) || [];
@@ -91,6 +102,9 @@ let keranjangBelanja = JSON.parse(localStorage.getItem('K_BASIC_CART')) || [];
 // INITIALIZATION / KETIKA WEBSITE DI-LOAD
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
+    // Sinkronkan ulang data dari localStorage saat halaman dimuat
+    databaseProduk = JSON.parse(localStorage.getItem("katalogProduk")) || defaultDatabaseProduk;
+    
     tampilkanKatalog(databaseProduk);
     perbaruiTampilanKeranjang();
 
@@ -118,34 +132,34 @@ function tampilkanKatalog(daftarProduk) {
         return;
     }
 
-  daftarProduk.forEach(produk => {
-    // Simulasi data rating & terjual (bisa disesuaikan atau ditambah ke databaseProduk)
-    const rating = produk.rating || 4.8; 
-    const terjual = produk.terjual || 120;
-
-    const kartuHtml = `
-        <div class="product-card">
-            <div class="product-img-wrapper" onclick="bukaModal(${produk.id})">
-                <img src="${produk.gambar}" alt="${produk.nama}">
-            </div>
-            <div class="product-info">
-                <span class="product-category">${produk.kategori}</span>
-                <h3 class="product-title">${produk.nama}</h3>
-                <p class="product-price">Rp ${produk.harga.toLocaleString('id-ID')}</p>
-                
-                <div class="product-meta">
-                    <span class="product-rating">
-                        <i class="star-icon">⭐</i> ${rating}
-                    </span>
-                    <span class="product-sold">| ${terjual} terjual</span>
+    daftarProduk.forEach(produk => {
+        const stokTersedia = produk.stok !== undefined ? produk.stok : 20;
+        const kartuHtml = `
+            <div class="product-card">
+                <div class="product-img-wrapper" onclick="bukaModal(${produk.id})">
+                    <img src="${produk.gambar}" alt="${produk.nama}">
                 </div>
+                <div class="product-info">
+                    <span class="product-category">${produk.kategori}</span>
+                    <h3 class="product-title">${produk.nama}</h3>
+                    <p class="product-price">Rp ${produk.harga.toLocaleString('id-ID')}</p>
+                    
+                    <div class="product-meta">
+                        <div class="product-rating">
+                            <span class="star-icon">&#9733;</span> ${produk.rating || 5.0}
+                        </div>
+                        <span class="product-sold">| Terjual ${produk.terjual || 0}+</span>
+                    </div>
+                    <p class="product-stock" style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">
+                        Stok Tersedia: <strong>${stokTersedia} pcs</strong>
+                    </p>
 
-                <button class="btn-primary" onclick="tambahKeKeranjang(${produk.id})">Tambah Keranjang</button>
+                    <button class="btn-primary" onclick="tambahKeKeranjang(${produk.id})">Tambah Keranjang</button>
+                </div>
             </div>
-        </div>
-    `;
-    wadahProduk.innerHTML += kartuHtml;
-});
+        `;
+        wadahProduk.innerHTML += kartuHtml;
+    });
 }
 
 // FUNGSI FILTER, SEARCH, & SORTING HARGA
@@ -364,7 +378,7 @@ function tampilkanNotifikasi(pesan) {
 }
 
 // ==========================================================================
-// VALIDASI FORM & KONFIRMASI PEMBAYARAN VIA WHATSAPP
+// VALIDASI FORM & KONFIRMASI PEMBAYARAN VIA WHATSAPP (UPDATE STOK & TERJUAL)
 // ==========================================================================
 function processCheckout(event) {
     event.preventDefault();
@@ -378,6 +392,18 @@ function processCheckout(event) {
     const alamatKirim = document.getElementById("alamat") ? document.getElementById("alamat").value : "Alamat";
     const kurir = document.getElementById("shipping-method") ? document.getElementById("shipping-method").value : "JNE";
     const metodeBayar = document.getElementById("payment-method") ? document.getElementById("payment-method").value : "Transfer";
+
+    // Kurangi stok dan tambahkan total terjual secara otomatis
+    keranjangBelanja.forEach(itemKeranjang => {
+        const produkTokoItem = databaseProduk.find(p => p.id === itemKeranjang.id);
+        if (produkTokoItem) {
+            produkTokoItem.stok = Math.max(0, (produkTokoItem.stok || 20) - itemKeranjang.jumlah);
+            produkTokoItem.terjual = (produkTokoItem.terjual || 0) + itemKeranjang.jumlah;
+        }
+    });
+
+    // Simpan pembaruan stok & terjual ke localStorage
+    localStorage.setItem("katalogProduk", JSON.stringify(databaseProduk));
 
     let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
@@ -413,6 +439,7 @@ function processCheckout(event) {
     if (formEl) formEl.reset();
     
     tampilkanHalaman('home');
+    tampilkanKatalog(databaseProduk);
 }
 
 // ==========================================================================
@@ -431,6 +458,9 @@ function tampilkanHalaman(halaman) {
         if (elHome) elHome.classList.remove("hidden");
     } else if (halaman === 'katalog') {
         if (elKatalog) elKatalog.classList.remove("hidden");
+        // Reload data katalog terbaru dari localStorage setiap kali membuka halaman katalog
+        databaseProduk = JSON.parse(localStorage.getItem("katalogProduk")) || defaultDatabaseProduk;
+        tampilkanKatalog(databaseProduk);
     } else if (halaman === 'checkout') {
         if (elCheckout) elCheckout.classList.remove("hidden");
         perbaruiTampilanKeranjang();
