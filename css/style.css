@@ -545,3 +545,35 @@ footer strong { color: var(--text-main); }
     transform: translateY(0);
     opacity: 1;
 }
+/* ==========================================================================
+   PERBAIKAN RESPONSIVE MENU NAVIGASI (UNTUK LAYAR HP / MOBILE)
+   ================ ========================================================== */
+@media (max-width: 768px) {
+    /* Pastikan header dan pembungkus navigasi tidak menyembunyikan menu */
+    header, .navbar, nav {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 15px !important;
+    }
+
+    /* Targetkan pembungkus menu Home, Katalog, Checkout */
+    .nav-links, .menu-navigasi, nav ul, .nav-menu {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        gap: 12px !important;
+        font-size: 13px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+
+    /* Rapikan ukuran tombol/link menu di HP */
+    .nav-links a, .menu-navigasi a, nav a, .nav-menu a {
+        font-size: 13px !important;
+        padding: 4px 8px !important;
+        text-decoration: none !important;
+    }
+}
