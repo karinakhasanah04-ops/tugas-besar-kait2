@@ -264,14 +264,13 @@ header {
     border-color: var(--accent);
 }
 
-.product-img-wrapper {
-    height: 280px;
-    background-color: #fff9db;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product-card .product-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    /* Mengubah cover menjadi contain agar seluruh bagian foto kaos terlihat utuh */
+    object-fit: contain; 
+    padding: 8px; /* Memberikan sedikit ruang di tepi kartu agar kaos tidak menempel ke garis batas */
+    display: block;
 }
 
 .product-img-wrapper img {
