@@ -1,44 +1,41 @@
 # K-BasicThread Co. - E-Commerce Platform
-Final Project Mata Kuliah: KAIT II (Administrasi Bisnis 2025/2026)
+Final Project Mata Kuliah: KAIT II (Administrasi Bisnis - Kelas 8)
 
 ## 1. Profil Bisnis & Value Proposition
 * **Nama Bisnis:** K-BasicThread Co.
 * **Deskripsi:** E-commerce yang menyediakan pakaian esensial sehari-hari dengan fokus utama pada kaos polos (T-shirt) berkualitas tinggi dan kaos kerah (Polo Shirt) berdesain minimalis modern.
-* **Value Proposition:** *"Premium Comfort for Everyday Essentials"*. Menggunakan bahan 100% Cotton Combed 30s untuk kaos polos (adem dan menyerap keringat) dan Cotton Pique premium untuk polo shirt, dengan harga yang tetap terjangkau bagi mahasiswa dan pekerja muda.
+* **Value Proposition:** *"Premium Comfort for Everyday Essentials"*. Menggunakan bahan 100% Cotton Combed 30s untuk kaos polos (adem dan menyerap keringat) serta Cotton Pique premium untuk polo shirt, dengan harga yang tetap terjangkau bagi mahasiswa dan pekerja muda.
 
 ## 2. Target Market & Segmentasi Pelanggan
 * **Demografis:** Pria dan wanita usia 17–30 tahun (mahasiswa, fresh graduates, pekerja kantoran muda).
 * **Geografis:** Area perkotaan dan pinggiran kota (fokus awal pengiriman seluruh Indonesia).
-* **Psikografis:** Individu yang menyukai gaya berpakaian kasual, minimalis, smart-casual, dan praktis (tidak suka baju bermotif terlalu ramai).
+* **Psikografis:** Individu yang menyukai gaya berpakaian kasual, minimalis, smart-casual, dan praktis.
 
 ## 3. Analisis Pasar & Kompetitor Short-Analysis
-* **Potensi Pasar:** Kebutuhan akan pakaian kasual (basic wear) selalu tinggi dan tidak musiman (timeless trend).
-* **Kompetitor:** Brand besar seperti Uniqlo (sisi kualitas) atau toko kaos polos kiloan (sisi harga murah).
-* **Strategi K-BasicThread Co:** Mengambil posisi di tengah—kualitas mendekati brand retail besar, namun dengan harga lokal yang kompetitif dan pengalaman belanja website yang sangat mudah.
+* **Potensi Pasar:** Kebutuhan akan pakaian kasual (*basic wear*) selalu tinggi, berkelanjutan, dan tidak musiman (*timeless trend*).
+* **Kompetitor:** Brand besar seperti Uniqlo (sisi kualitas) atau toko kaos polos curah (sisi harga murah).
+* **Strategi K-BasicThread Co.:** Mengambil posisi di tengah—menyediakan kualitas premium mendekati brand besar namun dengan efisiensi harga operasional sehingga jauh lebih ramah di kantong target pasar lokal.
 
-## 4. Manajemen Produk & Strategi Harga
-* **Katalog Produk Dinamis (Sinkronisasi LocalStorage):** Data produk dikelola secara terpusat dan dapat diperbarui secara *real-time* melalui panel administrasi (*Admin Dashboard*), yang otomatis mencakup sinkronisasi nama, kategori, harga, stok, deskripsi, jumlah terjual, dan rating produk.
-* **Daftar Produk Awal (Default Database):**
-
-| No | Kategori | Nama Produk | Harga | Stok | Deskripsi Singkat |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | Kaos Polos | Classic Tee Black | Rp 55.000 | 20 | Kaos polos hitam, 100% Cotton Combed 30s. |
-| 2 | Kaos Polos | Classic Tee White | Rp 55.000 | 25 | Kaos polos putih bersih, bahan tebal tidak menerawang. |
-| 3 | Kaos Polos | Classic Tee Navy | Rp 55.000 | 31 | Kaos polos warna biru dongker, cocok untuk santai. |
-| 4 | Kaos Polos | Classic Tee Dusty Pink | Rp 55.000 | 27 | Kaos polos merah muda kalem, tren warna pastel. |
-| 5 | Kaos Polo | Premium Polo Black | Rp 95.000 | 26 | Kaos kerah hitam, bahan Cotton Pique rajutan rapi. |
-| 6 | Kaos Polo | Premium Polo Navy | Rp 95.000 | 28 | Kaos kerah biru dongker, tampilan smart-casual. |
-| 7 | Kaos Polo | Premium Polo Maroon | Rp 95.000 | 29 | Kaos kerah merah marun, memberikan kesan elegan. |
-| 8 | Kaos Polo | Premium Polo Heather Grey | Rp 95.000 | 22 | Kaos kerah abu-abu misty, kasual namun tetap rapi. |
-
-* **Strategi Promosi:** Diskon otomatis sebesar 10% untuk pengguna baru pada simulasi checkout pertama.
+## 4. Struktur Arsitektur & Teknologi Web
+Platform e-commerce K-BasicThread Co. dibangun menggunakan arsitektur web berbasis klien (*Client-Side Rendering*) yang responsif, terstruktur atas komponen berikut:
+* **HTML5 (`index.html`, `admin.html`):** Menyediakan struktur semantik halaman utama pembeli serta dashboard administrasi toko.
+* **CSS3 (`css/style.css`):** Mengatur visualisasi antarmuka bertema *Bright Gold, Cream, & Mahogany Vibe* yang mewah dan elegan, lengkap dengan *Media Queries* untuk optimasi tampilan penuh (*full responsive*) pada perangkat mobile (HP).
+* **JavaScript (`js/app.js`, `js/admin.js`):** Mengelola logika bisnis dinamis seperti sistem filter/pencarian produk, keranjang belanja, kalkulasi nota otomatis, otentikasi login admin, dan integrasi data.
+* **Web Storage API (localStorage):** Berfungsi sebagai basis data lokal yang persisten untuk mensinkronkan data katalog produk, jumlah stok, grafik produk terjual, serta data keranjang belanja antar halaman secara *real-time*.
 
 ## 5. Alur Transaksi, Manajemen Stok, & Integrasi Sistem
-* **Metode Pengiriman:** Pelanggan dapat memilih opsi kurir pengiriman langsung pada form checkout (JNE Reguler - Rp 15.000, JNT Express - Rp 18.000, atau GoSend - Rp 25.000) yang secara otomatis memperbarui total tagihan pembayaran.
-* **Payment Gateway & Simulasi QRIS:** Menyediakan berbagai pilihan metode pembayaran seperti Transfer Bank serta fitur interaktif simulasi scan barcode QRIS yang akan muncul secara dinamis jika metode QRIS dipilih.
-* **Manajemen Inventaris Otomatis:** Ketika transaksi diselesaikan oleh pelanggan, sistem secara otomatis mengurangi jumlah ketersediaan stok produk dan menambahkan akumulasi jumlah produk terjual yang langsung diperbarui pada katalog utama serta dashboard admin.
-* **Konfirmasi Pesanan via WhatsApp:** Setelah menekan tombol **"Konfirmasi Pesanan"**, sistem JavaScript secara otomatis memvalidasi data, memperbarui data inventaris lokal, dan mengarahkan pelanggan ke web/aplikasi WhatsApp dengan format pesan pesanan terstruktur ke nomor admin.
-* **Rencana Data Analytics:** Menyertakan indikator pelacakan untuk memantau metrik performa toko:
-  * **Conversion Rate:** Berapa persen pengunjung website yang akhirnya melakukan pembelian.
-  * **Bounce Rate:** Mengukur persentase pengunjung yang langsung keluar setelah membuka halaman pertama (target < 40%).
-  * **Shopping Cart Abandonment Rate:** Melacak pengguna yang memasukkan barang ke keranjang tetapi tidak melakukan checkout.
+* **Metode Pengiriman Dinamis:** Pelanggan dapat memilih opsi kurir pengiriman langsung pada formulir checkout (**JNE Reguler - Rp 15.000** atau **JNT Express - Rp 18.000**) yang secara otomatis memperbarui total tagihan pembayaran dan nota checkout lengkap secara *real-time*.
+* **Payment Gateway & Simulasi QRIS:** Menyediakan pilihan metode pembayaran interaktif seperti Transfer Bank dan simulasi dinamis *scan barcode QRIS* yang akan otomatis muncul di layar jika opsi QRIS dipilih oleh pelanggan.
+* **Manajemen Inventaris Otomatis:** Begitu transaksi diselesaikan (klik konfirmasi), sistem secara otomatis mengurangi jumlah ketersediaan stok produk dan menambahkan akumulasi jumlah produk terjual (*sold counter*) secara akurat pada katalog utama serta dashboard admin.
+* **Sistem Keamanan Halaman Admin (Access Control):** Untuk melindungi integritas data inventaris dari pembeli biasa, akses menuju halaman `admin.html` telah diproteksi menggunakan gerbang kata sandi dinamis (*Password Prompt Barrier*). Pengguna wajib memasukkan kata sandi admin yang benar agar bisa masuk ke halaman pengelolaan stok.
+* **Konfirmasi Pesanan via WhatsApp:** Sistem JavaScript secara otomatis memvalidasi seluruh data formulir, merangkum detail item belanjaan, menghitung diskon pengguna baru (10%), menambahkan ongkir kurir terpilih, dan mengarahkan pembeli langsung ke WhatsApp Admin dengan format pesan pesanan yang rapi dan terstruktur.
+
+## 6. Rencana Data Analytics
+Menyertakan indikator pelacakan teknis pada repositori untuk memantau metrik performa toko:
+* **Conversion Rate:** Mengukur persentase pengunjung website yang akhirnya melakukan aksi pembelian.
+* **Bounce Rate:** Memantau persentase pengunjung yang langsung keluar setelah membuka halaman pertama (target efisiensi < 40%).
+* **Shopping Cart Abandonment Rate:** Melacak perilaku pengguna yang memasukkan barang ke keranjang tetapi tidak melanjutkan proses transaksi hingga tahap akhir checkout.
+
+---
+**K-BasicThread Co. Co-Created Project**
+*Designed by Karina Nurul Khasanah (NIM: 209250188)*
