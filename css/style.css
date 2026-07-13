@@ -239,7 +239,7 @@ header {
 }
 
 /* ==========================================================================
-   4. PRODUCTS GRID & META (Rating & Terjual)
+   4. PRODUCTS GRID & META
    ========================================================================== */
 .products-grid {
     display: grid;
@@ -264,19 +264,19 @@ header {
     border-color: var(--accent);
 }
 
+.product-img-wrapper {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
 .product-card .product-img-wrapper img {
     width: 100%;
     height: 100%;
-    /* Mengubah cover menjadi contain agar seluruh bagian foto kaos terlihat utuh */
-    object-fit: contain; 
-    padding: 8px; /* Memberikan sedikit ruang di tepi kartu agar kaos tidak menempel ke garis batas */
+    object-fit: contain; /* Menampilkan seluruh kaos secara utuh */
+    padding: 8px;
     display: block;
-}
-
-.product-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     transition: var(--transition);
 }
 
@@ -382,19 +382,19 @@ header {
     flex-wrap: wrap;
 }
 
-.modal-img-container img {
-    width: 100%;
-    height: 100%;
-    /* Mengubah menjadi contain agar foto penuh terlihat semua saat diklik */
-    object-fit: contain; 
-    padding: 16px; /* Memberi jarak estetik di dalam modal */
-    background-color: #fff9db; /* Menyelaraskan warna latar belakang agar menyatu dengan tema */
+.modal-img-container {
+    flex: 1;
+    min-width: 280px;
+    height: 350px;
+    background-color: #fff9db;
 }
 
 .modal-img-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Foto utuh dan penuh saat modal diklik */
+    padding: 16px;
+    display: block;
 }
 
 .modal-info {
@@ -481,7 +481,7 @@ header {
 .total-row { font-size: 15px; font-weight: 700; color: var(--text-main); margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; }
 
 /* ==========================================================================
-   8. FOOTER (Menempel langsung di bawah banner / tanpa gap)
+   8. FOOTER
    ========================================================================== */
 footer {
     background-color: #f7edd2;
@@ -498,62 +498,6 @@ footer strong { color: var(--text-main); }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   9. MEDIA QUERIES (RESPONSIVE DESIGNS)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .navbar { padding: 15px 20px; }
-    .nav-links { display: none; }
-    .hero-content h1 { font-size: 28px; }
-    .hero-content p { font-size: 14px; }
-    .filter-section { flex-direction: column; align-items: flex-start; }
-    .controls { width: 100%; }
-    #search-input { width: 100%; }
-    #category-filter { width: 100%; }
-    .checkout-wrapper { flex-direction: column; }
-    .modal-content { padding: 0; }
-    .cart-sidebar { width: 100%; right: -100%; }
-   .container {
-        padding-top: 140px !important;
-    }
-   header, .navbar {
-        padding: 8px 15px !important;
-    }
-
-    /* 1. Paksa kontainer pembungkus QRIS tampil penuh di tengah layar HP */
-    #qris-box, .qris-container {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin-top: 15px !important;
-        padding: 15px !important;
-        background: #fff9db !important; /* Warna cream khas tokomu */
-        border: 1px solid var(--border-color) !important;
-        border-radius: var(--radius-sm) !important;
-        width: 100% !important;
-    }
-
-    /* 2. Mengatur ukuran teks panduan pembayaran di bawah QRIS */
-    #qris-box p {
-        font-size: 12px !important;
-        text-align: center !important;
-        margin-bottom: 10px !important;
-        color: var(--text-main) !important;
-    }
-
-    /* 3. Paksa gambar qrcode agar muncul dengan ukuran proporsional di HP */
-    #qris-box img, [src*="qrcode"] {
-        width: 180px !important;   /* Lebar pas persegi untuk layar HP */
-        height: 180px !important;  /* Tinggi seimbang */
-        object-fit: contain !important;
-        display: block !important;
-        margin: 0 auto !important;
-        border: 3px solid #ffffff !important; /* Efek bingkai putih ala struk pembayaran */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-    }
 }
 
 .hidden {
@@ -585,26 +529,75 @@ footer strong { color: var(--text-main); }
     transform: translateY(0);
     opacity: 1;
 }
+
 /* ==========================================================================
-   PERBAIKAN RESPONSIVE MENU NAVIGASI (UNTUK LAYAR HP / MOBILE)
-   ================ ========================================================== */
+   9. MEDIA QUERIES (OPTIMASI RESPONSIVE MOBILE / HP)
+   ========================================================================== */
 @media (max-width: 768px) {
-    .product-img-wrapper {
-        width: 100% !important;
-        height: 220px !important; /* Mengurangi tinggi dari 280px agar pas di layar HP */
-        overflow: hidden !important;
+    /* Mendorong kontainer utama turun agar tidak tertutup header navigasi */
+    .container {
+        padding-top: 190px !important;
     }
 
+    /* Penyesuaian bungkus header navigasi */
+    header, .navbar, nav {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 15px !important;
+    }
+
+    /* Pengaturan Menu Tautan (Home, Katalog, Checkout) agar tampil berbaris di bawah logo */
+    .nav-links, .menu-navigasi, nav ul, .nav-menu {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        gap: 12px !important;
+        font-size: 13px !important;
+        margin: 10px 0 0 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .nav-links a, .menu-navigasi a, nav a, .nav-menu a {
+        font-size: 13px !important;
+        padding: 4px 8px !important;
+        text-decoration: none !important;
+    }
+
+    .hero-content h1 { font-size: 28px; }
+    .hero-content p { font-size: 14px; }
+    .filter-section { flex-direction: column; align-items: flex-start; }
+    .controls { width: 100%; }
+    #search-input { width: 100%; }
+    #category-filter { width: 100%; }
+    .checkout-wrapper { flex-direction: column; }
+    .modal-content { padding: 0; }
+    .cart-sidebar { width: 100%; right: -100%; }
+
+    /* Pengaturan Grid Katalog Produk Menjadi 2 Kolom Sejajar */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .product-img-wrapper {
+        width: 100% !important;
+        height: 220px !important;
+        overflow: hidden !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Foto Katalog Produk tetap Utuh (Contain) & Pas di HP */
     .product-card .product-img-wrapper img {
         width: 100% !important;
         height: 100% !important;
-        object-fit: cover !important; /* Kunci agar foto penuh dan otomatis terpotong rapi di tengah */
+        object-fit: contain !important;
+        padding: 6px !important;
         display: block !important;
-    }
-
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr) !important; /* Mengubah menjadi 2 kolom ke samping di HP */
-        gap: 12px !important; /* Memperkecil jarak antar kartu di HP */
     }
 
     .product-info {
@@ -612,34 +605,39 @@ footer strong { color: var(--text-main); }
     }
     
     .product-title {
-        font-size: 13px !important; /* Memperkecil sedikit ukuran font judul di HP */
+        font-size: 13px !important;
     }
-}
-    /* Pastikan header dan pembungkus navigasi tidak menyembunyikan menu */
-    header, .navbar, nav {
+
+    /* 1. Kontainer Pembungkus Simulasi QRIS di Tengah Layar HP */
+    #qris-box, .qris-container {
         display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: space-between !important;
+        flex-direction: column !important;
         align-items: center !important;
-        padding: 10px 15px !important;
+        justify-content: center !important;
+        margin-top: 15px !important;
+        padding: 15px !important;
+        background: #fff9db !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: var(--radius-sm) !important;
+        width: 100% !important;
     }
 
-    /* Targetkan pembungkus menu Home, Katalog, Checkout */
-    .nav-links, .menu-navigasi, nav ul, .nav-menu {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        gap: 12px !important;
-        font-size: 13px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        list-style: none !important;
+    /* 2. Ukuran Teks Petunjuk Pembayaran QRIS */
+    #qris-box p {
+        font-size: 12px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+        color: var(--text-main) !important;
     }
 
-    /* Rapikan ukuran tombol/link menu di HP */
-    .nav-links a, .menu-navigasi a, nav a, .nav-menu a {
-        font-size: 13px !important;
-        padding: 4px 8px !important;
-        text-decoration: none !important;
+    /* 3. Menampilkan Gambar Barcode (qrcode) Secara Proporsional di Layar HP */
+    #qris-box img, [src*="qrcode"] {
+        width: 160px !important;
+        height: 160px !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 10px auto !important;
+        border: 3px solid #ffffff !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
     }
 }
