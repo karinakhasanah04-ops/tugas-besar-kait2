@@ -516,7 +516,10 @@ footer strong { color: var(--text-main); }
     .modal-content { padding: 0; }
     .cart-sidebar { width: 100%; right: -100%; }
    .container {
-        padding-top: 140px !important; /* Menaikkan jarak dari 100px menjadi 140px agar konten turun */
+        padding-top: 140px !important;
+    }
+   header, .navbar {
+        padding: 8px 15px !important;
     }
 }
 
