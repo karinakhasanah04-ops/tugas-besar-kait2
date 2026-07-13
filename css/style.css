@@ -521,24 +521,22 @@ footer strong { color: var(--text-main); }
    header, .navbar {
         padding: 8px 15px !important;
     }
-   @media (max-width: 768px) {
-    /* ... kode perbaikan mobile kamu yang lain (seperti .container dan .products-grid) ... */
 
-    /* 1. Paksa kotak pembungkus QRIS tampil di tengah layar HP */
-    #qris-box {
+    /* 1. Paksa kontainer pembungkus QRIS tampil penuh di tengah layar HP */
+    #qris-box, .qris-container {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
         margin-top: 15px !important;
         padding: 15px !important;
-        background: #fff9db !important; /* Warna cream-kuning khas tokomu */
+        background: #fff9db !important; /* Warna cream khas tokomu */
         border: 1px solid var(--border-color) !important;
         border-radius: var(--radius-sm) !important;
         width: 100% !important;
     }
 
-    /* 2. Mengatur ukuran teks petunjuk di dalam kotak QRIS */
+    /* 2. Mengatur ukuran teks panduan pembayaran di bawah QRIS */
     #qris-box p {
         font-size: 12px !important;
         text-align: center !important;
@@ -546,17 +544,16 @@ footer strong { color: var(--text-main); }
         color: var(--text-main) !important;
     }
 
-    /* 3. Paksa elemen gambar barcode QRIS muncul dengan ukuran pas di HP */
-    #qris-box img {
-        width: 180px !important;
-        height: 180px !important;
+    /* 3. Paksa gambar qrcode agar muncul dengan ukuran proporsional di HP */
+    #qris-box img, [src*="qrcode"] {
+        width: 180px !important;   /* Lebar pas persegi untuk layar HP */
+        height: 180px !important;  /* Tinggi seimbang */
         object-fit: contain !important;
         display: block !important;
         margin: 0 auto !important;
-        border: 3px solid #ffffff !important;
+        border: 3px solid #ffffff !important; /* Efek bingkai putih ala struk pembayaran */
         box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
     }
-}
 }
 
 .hidden {
