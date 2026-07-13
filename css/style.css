@@ -515,6 +515,9 @@ footer strong { color: var(--text-main); }
     .checkout-wrapper { flex-direction: column; }
     .modal-content { padding: 0; }
     .cart-sidebar { width: 100%; right: -100%; }
+   .container {
+        padding-top: 140px !important; /* Menaikkan jarak dari 100px menjadi 140px agar konten turun */
+    }
 }
 
 .hidden {
