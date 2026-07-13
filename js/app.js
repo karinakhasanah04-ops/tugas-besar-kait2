@@ -407,7 +407,9 @@ function processCheckout(event) {
 
     let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
-    let biayaOngkir = kurir === "JNT" ? 18000 : (kurir === "GoSend" ? 25000 : 15000);
+    
+    // Perbaikan: Opsi GoSend dihapus, hanya memproses JNT (18000) dan JNE (15000)
+    let biayaOngkir = kurir === "JNT" ? 18000 : 15000;
     let totalAkhir = (subtotal - nilaiDiskon) + biayaOngkir;
 
     let daftarItemTeks = "";
@@ -483,16 +485,13 @@ function tampilkanSimulasiQRIS() {
     }
 }
 
+// Perbaikan: Fungsi dibersihkan dari opsi GoSend
 function cekMetodePengiriman() {
     const kurirEl = document.getElementById("shipping-method");
     const kurir = kurirEl ? kurirEl.value : "JNE";
-    let biayaOngkir = 15000; 
-
-    if (kurir === "JNT") {
-        biayaOngkir = 18000;
-    } else if (kurir === "GoSend") {
-        biayaOngkir = 25000;
-    }
+    
+    // Jika JNT maka 18000, jika selain itu (JNE) maka 15000
+    let biayaOngkir = kurir === "JNT" ? 18000 : 15000; 
 
     let subtotal = 0;
     if (typeof keranjangBelanja !== 'undefined' && keranjangBelanja.length > 0) {
