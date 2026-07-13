@@ -521,6 +521,42 @@ footer strong { color: var(--text-main); }
    header, .navbar {
         padding: 8px 15px !important;
     }
+   @media (max-width: 768px) {
+    /* ... kode perbaikan mobile kamu yang lain (seperti .container dan .products-grid) ... */
+
+    /* 1. Paksa kotak pembungkus QRIS tampil di tengah layar HP */
+    #qris-box {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-top: 15px !important;
+        padding: 15px !important;
+        background: #fff9db !important; /* Warna cream-kuning khas tokomu */
+        border: 1px solid var(--border-color) !important;
+        border-radius: var(--radius-sm) !important;
+        width: 100% !important;
+    }
+
+    /* 2. Mengatur ukuran teks petunjuk di dalam kotak QRIS */
+    #qris-box p {
+        font-size: 12px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+        color: var(--text-main) !important;
+    }
+
+    /* 3. Paksa elemen gambar barcode QRIS muncul dengan ukuran pas di HP */
+    #qris-box img {
+        width: 180px !important;
+        height: 180px !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
+        border: 3px solid #ffffff !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    }
+}
 }
 
 .hidden {
