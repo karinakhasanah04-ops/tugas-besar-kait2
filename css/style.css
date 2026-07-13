@@ -549,6 +549,32 @@ footer strong { color: var(--text-main); }
    PERBAIKAN RESPONSIVE MENU NAVIGASI (UNTUK LAYAR HP / MOBILE)
    ================ ========================================================== */
 @media (max-width: 768px) {
+    .product-img-wrapper {
+        width: 100% !important;
+        height: 220px !important; /* Mengurangi tinggi dari 280px agar pas di layar HP */
+        overflow: hidden !important;
+    }
+
+    .product-card .product-img-wrapper img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important; /* Kunci agar foto penuh dan otomatis terpotong rapi di tengah */
+        display: block !important;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* Mengubah menjadi 2 kolom ke samping di HP */
+        gap: 12px !important; /* Memperkecil jarak antar kartu di HP */
+    }
+
+    .product-info {
+        padding: 12px !important;
+    }
+    
+    .product-title {
+        font-size: 13px !important; /* Memperkecil sedikit ukuran font judul di HP */
+    }
+}
     /* Pastikan header dan pembungkus navigasi tidak menyembunyikan menu */
     header, .navbar, nav {
         display: flex !important;
