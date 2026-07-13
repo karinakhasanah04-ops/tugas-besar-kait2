@@ -84,6 +84,15 @@
         }
     </style>
 </head>
+<script>
+    // Meminta password saat halaman admin dibuka
+    let password = prompt("Masukkan Kata Sandi Admin K-BasicThread:");
+    
+    if (password !== "karina209250188") { 
+        alert("Akses ditolak! Kata sandi salah atau Anda bukan Admin.");
+        window.location.href = "index.html"; // Dilempar kembali ke halaman pembeli
+    }
+</script>
 <body>
     <div class="admin-container">
         <div class="admin-header">
