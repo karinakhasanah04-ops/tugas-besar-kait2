@@ -493,7 +493,7 @@ function tampilkanSimulasiQRIS() {
     const qrisImg = qrisBox.querySelector("img");
     if (qrisImg) {
         // Menggunakan relative path yang aman tanpa forward-slash awal (clean URL root path protection)
-        qrisImg.src = "images/bannerjpg";
+        qrisImg.src = "images/qrcode.jpg";
     }
 
     if (metode === "QRIS") {
