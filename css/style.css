@@ -561,44 +561,62 @@ footer strong { color: var(--text-main); }
         padding-top: 40px !important; /* Dikurangi dari 80px agar space kosong di HP hilang */
     }
     
-    /* Jika kamu memakai element filter section, perkecil juga margin atasnya jika ada */
     .filter-section {
         margin-top: 10px !important;
     }
 
-    /* 2. Merapikan Navbar Mobile (Tetap Horisontal Sejajar & Presisi) */
+   /* 2. Merapikan Navbar Mobile (Mengunci Tampilan Tetap Bersusun Sesuai Gambar) */
     .navbar {
-        flex-direction: row !important;
-        justify-content: space-between !important;
+        display: flex !important;
+        flex-direction: column !important; /* Membuat logo di atas dan menu di bawah */
         align-items: center !important;
-        padding: 10px 16px !important;
+        justify-content: center !important;
+        padding: 15px 16px 10px 16px !important;
+        position: relative !important;
     }
 
     .logo {
-        font-size: 16px !important;
+        font-size: 20px !important; /* Ukuran font logo K-BasicThread.Co */
+        margin-bottom: 8px !important;
+        text-align: center;
+        width: 100%;
     }
 
     .nav-links {
-        gap: 10px !important;
+        display: flex !important;
+        flex-direction: row !important; /* Menu Home, Katalog, Checkout tetap berjejer ke samping */
+        justify-content: center !important;
+        gap: 16px !important; /* Jarak antar menu */
+        padding: 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
     }
 
     .nav-links a {
-        font-size: 11px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
     }
 
+    /* Mengunci Posisi Ikon Keranjang Belanja di Kanan Atas Navbar */
     .cart-icon-container {
-        position: static !important; /* Mengunci tombol keranjang agar tetap sejajar horizontal */
-        padding: 6px !important;
-        width: 32px;
-        height: 32px;
+        position: absolute !important; 
+        right: 16px !important;
+        top: 12px !important; /* Menjaga posisi bulatan keranjang tetap di kanan atas */
+        padding: 8px !important;
+        width: 36px;
+        height: 36px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     #cart-count {
-        width: 15px;
-        height: 15px;
-        font-size: 8px;
-        top: -4px;
-        right: -4px;
+        position: absolute !important;
+        top: -2px !important;
+        right: -2px !important;
+        width: 16px;
+        height: 16px;
+        font-size: 9px !important;
     }
 
     /* 3. Hero Banner Mobile (DIPERBAIKI AGAR FULL SCREEN / TIDAK SETENGAH) */
