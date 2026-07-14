@@ -254,7 +254,7 @@ header {
    ========================================================================== */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(4, 1fr); 
     gap: 24px;
 }
 
@@ -542,23 +542,28 @@ footer strong { color: var(--text-main); }
     opacity: 1;
 }
 
-/* ==========================================================================
+  /* ==========================================================================
    9. MEDIA QUERIES (OPTIMASI RESPONSIVE MOBILE / HP)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* 1. Pengaturan Global & Jarak Container */
+    /* 1. Pengaturan Global & Jarak Container (JARAK ATAS DIPERKECIL) */
     body {
         font-size: 13px;
     }
 
     .container {
         padding: 16px !important;
-        padding-top: 80px !important; /* Mencegah konten tertimbun navbar mobile */
+        padding-top: 40px !important; /* Dikurangi dari 80px agar konten naik ke atas */
     }
 
     /* Merapatkan jarak atas khusus halaman katalog & checkout pembeli */
     .katalog-section, .checkout-section {
-        padding-top: 80px !important; /* Mengurangi ruang kosong/blank space vertikal di HP */
+        padding-top: 40px !important; /* Dikurangi dari 80px agar space kosong di HP hilang */
+    }
+    
+    /* Jika kamu memakai element filter section, perkecil juga margin atasnya jika ada */
+    .filter-section {
+        margin-top: 10px !important;
     }
 
     /* 2. Merapikan Navbar Mobile (Tetap Horisontal Sejajar & Presisi) */
