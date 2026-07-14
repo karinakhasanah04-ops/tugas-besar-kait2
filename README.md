@@ -1,6 +1,20 @@
 # K-BasicThread Co. - E-Commerce Platform
-Final Project Mata Kuliah: KAIT II (Administrasi Bisnis - Kelas 8)
+Final Project Mata Kuliah: KAIT II (Administrasi Bisnis - 8)
+## 🌐 Tautan Proyek
+* **Link Repository GitHub:** [https://github.com/karinakhasanah04-ops/tugas-besar-kait2]
+* **Link GitHub Pages (Live Website):** [https://karinakhasanah04-ops.github.io/tugas-besar-kait2/]
 
+## 📁 Struktur Folder Proyek
+```text
+├── index.html          # Halaman utama pembeli (Katalog & Checkout)
+├── admin.html          # Dashboard administrasi toko (Diproteksi Password)
+├── css/
+│   └── style.css       # Mengatur visualisasi Bright Gold, Cream, & Mahogany Vibe
+├── js/
+│   ├── app.js          # Logika filter, keranjang belanja, dan checkout WA
+│   └── admin.js        # Logika dashboard admin dan manajemen data lokal
+└── images/
+    └── (Seluruh aset gambar produk & QRIS)
 ## 1. Profil Bisnis & Value Proposition
 * **Nama Bisnis:** K-BasicThread Co.
 * **Deskripsi:** E-commerce yang menyediakan pakaian esensial sehari-hari dengan fokus utama pada kaos polos (T-shirt) berkualitas tinggi dan kaos kerah (Polo Shirt) berdesain minimalis modern.
