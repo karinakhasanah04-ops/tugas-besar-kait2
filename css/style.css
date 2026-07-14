@@ -23,6 +23,11 @@
     scroll-behavior: smooth;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden;        /* KUNCI: Mencegah halaman bocor/geser ke kanan di HP */
+}
+
 body {
     background-color: var(--bg-primary);
     color: var(--text-main);
@@ -34,6 +39,8 @@ body {
     margin: 0 auto;
     padding: 40px 24px;
     padding-top: 120px; /* Ditambahkan agar konten utama desktop tidak terpotong navbar */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 a {
@@ -74,6 +81,7 @@ header {
     left: 0;
     z-index: 1000;
     border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;    /* Memastikan padding navbar tidak mendorong lebar ke luar */
 }
 
 .navbar {
@@ -83,6 +91,8 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 24px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .logo {
@@ -160,6 +170,8 @@ header {
     color: #fff;
     margin-top: 70px;
     border-bottom: 2px solid var(--accent);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .hero-content {
@@ -169,6 +181,7 @@ header {
     justify-content: center;
     width: 100%;
     padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .hero-content h1 {
@@ -205,6 +218,8 @@ header {
     margin-bottom: 32px;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .filter-section h2 {
@@ -245,6 +260,8 @@ header {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .product-card {
@@ -351,6 +368,7 @@ header {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal-content {
@@ -427,6 +445,7 @@ header {
     flex-direction: column;
     padding: 24px;
     border-left: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
 .cart-sidebar.open { right: 0; }
@@ -463,11 +482,13 @@ header {
     margin-top: 0;
     padding-top: 130px; /* Ditambahkan agar Formulir Pembayaran di desktop berjarak aman di bawah navbar */
     border-top: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
 }
 .checkout-section h2 { margin-bottom: 24px; font-size: 26px; font-weight: 700; color: var(--text-main); }
-.checkout-wrapper { display: flex; gap: 32px; flex-wrap: wrap; }
-#checkout-form { flex: 1.5; min-width: 300px; background: #fffef8; padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); }
-.checkout-summary { flex: 1; min-width: 300px; background: #fffef8; padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); height: max-content; }
+.checkout-wrapper { display: flex; gap: 32px; flex-wrap: wrap; width: 100%; box-sizing: border-box; }
+#checkout-form { flex: 1.5; min-width: 300px; background: #fffef8; padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); box-sizing: border-box; }
+.checkout-summary { flex: 1; min-width: 300px; background: #fffef8; padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); height: max-content; box-sizing: border-box; }
 
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 12px; color: var(--text-main); letter-spacing: 0.3px; }
@@ -491,6 +512,8 @@ footer {
     margin-top: 0 !important; /* Diubah menjadi 0 agar menempel ke atas */
     font-size: 12px;
     border-top: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
 }
 footer strong { color: var(--text-main); }
 
@@ -500,7 +523,7 @@ footer strong { color: var(--text-main); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-   .hidden {
+.hidden {
     display: none !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -545,19 +568,27 @@ footer strong { color: var(--text-main); }
     .container {
         padding: 16px !important;
         padding-top: 80px !important; /* Mencegah konten tertimbun navbar mobile */
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     /* Merapatkan jarak atas khusus halaman katalog & checkout pembeli */
     .katalog-section, .checkout-section {
         padding-top: 80px !important; /* Mengurangi ruang kosong/blank space vertikal di HP */
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     /* 2. Merapikan Navbar Mobile (Tetap Horisontal Sejajar & Presisi) */
     .navbar {
+        display: flex !important;
         flex-direction: row !important;
         justify-content: space-between !important;
         align-items: center !important;
         padding: 10px 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .logo {
@@ -591,6 +622,8 @@ footer strong { color: var(--text-main); }
     .hero-banner {
         height: 45vh !important;
         margin-top: 50px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .hero-content h1 {
@@ -617,6 +650,8 @@ footer strong { color: var(--text-main); }
         gap: 10px !important;
         margin-bottom: 20px !important;
         padding-bottom: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .filter-section h2 {
@@ -627,7 +662,7 @@ footer strong { color: var(--text-main); }
     .controls {
         flex-direction: column !important;
         gap: 8px !important;
-        width: 100%;
+        width: 100% !important;
     }
 
     #search-input, #category-filter, #price-sort {
@@ -640,6 +675,8 @@ footer strong { color: var(--text-main); }
     .products-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .product-card {
@@ -686,6 +723,7 @@ footer strong { color: var(--text-main); }
     /* 6. Tampilan Modal Detail Produk Mobile */
     .modal {
         padding: 8px !important;
+        box-sizing: border-box !important;
     }
 
     .modal-content {
@@ -722,18 +760,22 @@ footer strong { color: var(--text-main); }
         width: 290px !important;
         right: -310px;
         padding: 14px !important;
+        box-sizing: border-box !important;
     }
 
     /* 8. Tampilan Form & Ringkasan Checkout */
     .checkout-wrapper {
         flex-direction: column !important;
         gap: 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     #checkout-form, .checkout-summary {
         width: 100% !important;
         flex: none !important;
         padding: 16px !important;
+        box-sizing: border-box !important;
     }
 
     .form-group label {
