@@ -33,7 +33,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 24px;
-    padding-top: 100px; 
+    padding-top: 120px; /* Ditambahkan agar konten utama desktop tidak terpotong navbar */
 }
 
 a {
@@ -274,7 +274,7 @@ header {
 .product-card .product-img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Menampilkan seluruh kaos secara utuh */
+    object-fit: contain;
     padding: 8px;
     display: block;
     transition: var(--transition);
@@ -392,7 +392,7 @@ header {
 .modal-img-container img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Foto utuh dan penuh saat modal diklik */
+    object-fit: contain;
     padding: 16px;
     display: block;
 }
@@ -460,9 +460,9 @@ header {
    7. CHECKOUT SECTION
    ========================================================================== */
 .checkout-section {
-    margin-top: 40px;
+    margin-top: 0;
+    padding-top: 130px; /* Ditambahkan agar Formulir Pembayaran di desktop berjarak aman di bawah navbar */
     border-top: 1px solid var(--border-color);
-    padding-top: 40px;
 }
 .checkout-section h2 { margin-bottom: 24px; font-size: 26px; font-weight: 700; color: var(--text-main); }
 .checkout-wrapper { display: flex; gap: 32px; flex-wrap: wrap; }
@@ -488,7 +488,7 @@ footer {
     color: var(--text-muted);
     text-align: center;
     padding: 30px 24px;
-    margin-top: 0 !important;
+    margin-top: 40px !important; /* Diberikan ruang atas agar memisahkan diri dari komponen atasnya */
     font-size: 12px;
     border-top: 1px solid var(--border-color);
 }
@@ -536,11 +536,11 @@ footer strong { color: var(--text-main); }
 @media (max-width: 768px) {
     /* 1. Pengaturan Global & Spacing */
     body {
-        font-size: 14px; /* Menyesuaikan ukuran font dasar agar tidak kebesaran di HP */
+        font-size: 14px;
     }
 
     section {
-        padding: 40px 15px !important; /* Mengurangi padding kanan-kiri agar konten tidak terlalu sempit */
+        padding: 40px 15px !important;
     }
 
     /* 2. Merapikan Navbar di Mobile */
@@ -558,7 +558,7 @@ footer strong { color: var(--text-main); }
     .cart-icon-container {
         position: absolute;
         top: 15px;
-        right: 15px; /* Menjaga ikon keranjang tetap di pojok kanan atas */
+        right: 15px;
     }
 
     /* 3. Hero Banner biar tidak terlalu memakan tempat */
@@ -578,7 +578,7 @@ footer strong { color: var(--text-main); }
 
     /* 4. Grid Katalog Produk (Symmetric 2 Kolom di HP) */
     .products-grid {
-        grid-template-columns: repeat(2, 1fr) !important; /* Membagi rata menjadi 2 kolom seimbang */
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
     }
 
@@ -586,8 +586,8 @@ footer strong { color: var(--text-main); }
         border-radius: var(--radius-sm) !important;
     }
 
-    .product-image-wrapper {
-        height: 160px !important; /* Memastikan tinggi kotak gambar seragam di HP */
+    .product-img-wrapper {
+        height: 160px !important;
     }
 
     .product-title {
@@ -600,12 +600,21 @@ footer strong { color: var(--text-main); }
     }
 
     /* 5. Tampilan Halaman Checkout & Keranjang */
+    .checkout-section {
+        padding-top: 180px !important; /* Ditambahkan jarak ekstra tinggi khusus di mobile agar tulisan judul terdorong ke bawah navbar */
+    }
+
+    .checkout-section h2 {
+        text-align: center;
+        font-size: 22px !important;
+        margin-top: 10px;
+    }
+
     .checkout-container {
-        grid-template-columns: 1fr !important; /* Mengubah susunan dari 2 kolom samping-menyamping menjadi 1 kolom memanjang ke bawah */
+        grid-template-columns: 1fr !important;
         gap: 20px !important;
     }
 
-    /* Memastikan form checkout dan ringkasan pesanan memenuhi lebar layar mobile */
     .checkout-form-side, .checkout-summary-side {
         width: 100% !important;
         padding: 15px !important;
@@ -613,14 +622,14 @@ footer strong { color: var(--text-main); }
 
     /* Menata tombol aksi utama di mobile */
     .btn-primary, .btn-secondary {
-        width: 100% !important; /* Membuat tombol menjadi penuh/lebar penuh agar mudah ditekan jari */
+        width: 100% !important;
         text-align: center;
         padding: 12px !important;
     }
 
     /* 6. Form Group Input di Mobile */
     .form-row {
-        grid-template-columns: 1fr !important; /* Input yang tadinya bersebelahan menjadi berurutan ke bawah */
+        grid-template-columns: 1fr !important;
         gap: 10px !important;
     }
 
@@ -632,9 +641,10 @@ footer strong { color: var(--text-main); }
     }
 
     #qris-box img {
-        max-width: 180px !important; /* Membatasi ukuran QR Code agar pas di tengah layar HP */
+        max-width: 180px !important;
         height: auto !important;
     }
+
     /* Memastikan pembungkus checkout berubah menjadi 1 kolom di HP */
     .checkout-wrapper {
         flex-direction: column !important;
