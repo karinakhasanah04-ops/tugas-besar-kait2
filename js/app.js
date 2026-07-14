@@ -116,6 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) searchInput.addEventListener("input", filterSistem);
     if (categoryFilter) categoryFilter.addEventListener("change", filterSistem);
     if (priceSort) priceSort.addEventListener("change", filterSistem);
+
+    // Otomatis pasang event listener jika dropdown metode pembayaran berubah
+    const paymentMethodSelect = document.getElementById("payment-method");
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener("change", tampilkanSimulasiQRIS);
+    }
 });
 
 // ==========================================================================
@@ -408,7 +414,6 @@ function processCheckout(event) {
     let subtotal = keranjangBelanja.reduce((sum, item) => sum + (item.harga * item.jumlah), 0);
     let nilaiDiskon = subtotal > 0 ? Math.round(subtotal * 0.10) : 0;
     
-    // Perbaikan: Opsi GoSend dihapus, hanya memproses JNT (18000) dan JNE (15000)
     let biayaOngkir = kurir === "JNT" ? 18000 : 15000;
     let totalAkhir = (subtotal - nilaiDiskon) + biayaOngkir;
 
@@ -440,6 +445,10 @@ function processCheckout(event) {
     const formEl = document.getElementById("checkout-form");
     if (formEl) formEl.reset();
     
+    // Pastikan container QRIS disembunyikan kembali setelah form reset
+    const qrisBox = document.getElementById("qris-container") || document.getElementById("qris-box");
+    if (qrisBox) qrisBox.classList.add("hidden");
+
     tampilkanHalaman('home');
     tampilkanKatalog(databaseProduk);
 }
@@ -460,12 +469,12 @@ function tampilkanHalaman(halaman) {
         if (elHome) elHome.classList.remove("hidden");
     } else if (halaman === 'katalog') {
         if (elKatalog) elKatalog.classList.remove("hidden");
-        // Reload data katalog terbaru dari localStorage setiap kali membuka halaman katalog
         databaseProduk = JSON.parse(localStorage.getItem("katalogProduk")) || defaultDatabaseProduk;
         tampilkanKatalog(databaseProduk);
     } else if (halaman === 'checkout') {
         if (elCheckout) elCheckout.classList.remove("hidden");
         perbaruiTampilanKeranjang();
+        tampilkanSimulasiQRIS(); // Evaluasi status tampilan QRIS saat membuka checkout
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -473,12 +482,21 @@ function tampilkanHalaman(halaman) {
 
 function tampilkanSimulasiQRIS() {
     const elementMetode = document.getElementById("payment-method");
-    const metode = elementMetode ? elementMetode.value : "";
-    const qrisBox = document.getElementById("qris-container");
+    const metode = elementMetode ? elementMetode.value.toUpperCase() : "";
+    
+    // Mendukung kedua variasi ID yang umum digunakan pembungkus box QRIS
+    const qrisBox = document.getElementById("qris-container") || document.getElementById("qris-box");
     
     if (!qrisBox) return;
 
-    if (metode === "QRIS" || metode === "qris") {
+    // Cari elemen gambar di dalam container QRIS untuk dipastikan path-nya aman
+    const qrisImg = qrisBox.querySelector("img");
+    if (qrisImg) {
+        // Menggunakan relative path yang aman tanpa forward-slash awal (clean URL root path protection)
+        qrisImg.src = "images/qrcode.jpg";
+    }
+
+    if (metode === "QRIS") {
         qrisBox.classList.remove("hidden");
     } else {
         qrisBox.classList.add("hidden");
@@ -490,7 +508,6 @@ function cekMetodePengiriman() {
     const kurirEl = document.getElementById("shipping-method");
     const kurir = kurirEl ? kurirEl.value : "JNE";
     
-    // Jika JNT maka 18000, jika selain itu (JNE) maka 15000
     let biayaOngkir = kurir === "JNT" ? 18000 : 15000; 
 
     let subtotal = 0;
