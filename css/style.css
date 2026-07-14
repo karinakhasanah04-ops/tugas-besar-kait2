@@ -565,7 +565,7 @@ footer strong { color: var(--text-main); }
         margin-top: 10px !important;
     }
 
-   /* 2. Merapikan Navbar Mobile (Mengunci Tampilan Tetap Bersusun Sesuai Gambar) */
+  /* 2. Merapikan Navbar Mobile (Mengunci Tampilan Tetap Bersusun Sesuai Gambar) */
     .navbar {
         display: flex !important;
         flex-direction: column !important; /* Membuat logo di atas dan menu di bawah */
