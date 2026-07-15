@@ -30,38 +30,38 @@ Berikut adalah visualisasi antarmuka sistem pada resolusi monitor desktop:
 
 Halaman Utama & Hero Banner
 
-(images/home-dekstop.png)
+<img width="960" height="448" alt="home-dekstop" src="https://github.com/user-attachments/assets/eb850aba-d42f-4b53-b02e-e0a7a2f16392" />
 
 Katalog Produk & Fitur Filter
 
-(images/katalog-dekstop.png)
+<img width="418" height="465" alt="katalog-dekstop" src="https://github.com/user-attachments/assets/56f2067c-7c1a-43d5-8b15-c1bfb0e39306" />
 
 Formulir Checkout & Ringkasan Pembayaran
 
-(images/checkout-dekstop.png)
+<img width="861" height="508" alt="checkout-dekstop" src="https://github.com/user-attachments/assets/91fc74e6-d5c0-4f7a-bb65-c888878cab5c" />
 
 Halaman Admin
 
-(images/admin-dekstop.png)
+<img width="482" height="484" alt="admin-dekstop" src="https://github.com/user-attachments/assets/bff5e1c6-1b07-4335-9647-4ccdf06e7a9e" />
 
 📱 Tampilan Ponsel (Mobile View)
 Optimasi antarmuka yang sepenuhnya responsif ketika diakses melalui perangkat smartphone:
 
 Halaman Utama & Hero Banner
 
-(images/home-mobile.jpeg)
+<img width="701" height="1600" alt="home-mobile" src="https://github.com/user-attachments/assets/52bb3e06-f3ab-4895-83da-49b6af1b5173" />
 
 Katalog Produk & Fitur Filter
 
-(images/katalog-mobile.jpeg)
+<img width="305" height="1600" alt="katalog-mobile" src="https://github.com/user-attachments/assets/85890c4a-372d-4c92-a7bc-9a1764244ae3" />
 
 Formulir Checkout & Ringkasan Pembayaran
 
-(images/checkout-mobile.jpeg)
+<img width="472" height="1600" alt="checkout-mobile" src="https://github.com/user-attachments/assets/9dea2e13-ee02-4fb6-a82c-495d3457d054" />
 
 Halaman Admin
 
-(images/admin-mobile.jpeg)
+<img width="484" height="1599" alt="admin-mobile" src="https://github.com/user-attachments/assets/dc4ab439-eada-493d-b11d-78c09339bd90" />
 
 
 1. Profil Bisnis & Value Proposition
