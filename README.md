@@ -1,4 +1,3 @@
-Markdown
 # K-BasicThread Co. - E-Commerce Platform
 Final Project Mata Kuliah: KAIT II (Administrasi Bisnis - 8)
 
@@ -24,6 +23,8 @@ Untuk melakukan pengujian pada Dashboard Inventaris dan Manajemen Stok di halama
 │   └── admin.js        # Logika dashboard admin dan manajemen data lokal
 └── images/
     └── (Seluruh aset gambar produk & QRIS)
+```
+
 📸 Tangkapan Layar Antarmuka (Screenshots)
 🖥️ Tampilan Desktop (Desktop View)
 Berikut adalah visualisasi antarmuka sistem pada resolusi monitor desktop:
@@ -47,19 +48,19 @@ Halaman Admin
 📱 Tampilan Ponsel (Mobile View)
 Optimasi antarmuka yang sepenuhnya responsif ketika diakses melalui perangkat smartphone:
 
-Halaman Utama & Hero Banner
+**Halaman Utama & Hero Banner**
 
 ![Tampilan Mobile](images/home-mobile.jpeg)
 
-Katalog Produk & Fitur Filter
+**Katalog Produk & Fitur Filter**
 
 ![Katalog Mobile](images/katalog-mobile.jpeg)
 
-Formulir Checkout & Ringkasan Pembayaran
+**Formulir Checkout & Ringkasan Pembayaran**
 
 ![Checkout Mobile](images/checkout-mobile.jpeg)
 
-Halaman Admin
+**Halaman Admin**
 
 ![Admin Mobile](images/admin-mobile.jpeg)
 
@@ -115,5 +116,4 @@ Bounce Rate: Memantau persentase pengunjung yang langsung keluar setelah membuka
 
 Shopping Cart Abandonment Rate: Melacak perilaku pengguna yang memasukkan barang ke keranjang tetapi tidak melanjutkan proses transaksi hingga tahap akhir checkout.
 
-K-BasicThread Co. Co-Created Project
-Designed by Karina Nurul Khasanah (NIM: 209250188)
+K-BasicThread Co. Co-Created Project Designed by Karina Nurul Khasanah (NIM: 209250188)
