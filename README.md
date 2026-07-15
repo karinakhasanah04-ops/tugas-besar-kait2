@@ -29,30 +29,38 @@ Untuk melakukan pengujian pada Dashboard Inventaris dan Manajemen Stok di halama
 Berikut adalah visualisasi antarmuka sistem pada resolusi monitor desktop:
 
 Halaman Utama & Hero Banner
+
 ![Tampilan Desktop](images/home-dekstop.png)
 
 Katalog Produk & Fitur Filter
+
 ![Katalog Desktop](images/katalog-dekstop.png)
 
 Formulir Checkout & Ringkasan Pembayaran
+
 ![Checkout Desktop](images/checkout-dekstop.png)
 
 Halaman Admin
+
 ![Admin Desktop](images/admin-dekstop.png)
 
 📱 Tampilan Ponsel (Mobile View)
 Optimasi antarmuka yang sepenuhnya responsif ketika diakses melalui perangkat smartphone:
 
 Halaman Utama & Hero Banner
+
 ![Tampilan Mobile](images/home-mobile.jpeg)
 
 Katalog Produk & Fitur Filter
+
 ![Katalog Mobile](images/katalog-mobile.jpeg)
 
 Formulir Checkout & Ringkasan Pembayaran
+
 ![Checkout Mobile](images/checkout-mobile.jpeg)
 
 Halaman Admin
+
 ![Admin Mobile](images/admin-mobile.jpeg)
 
 1. Profil Bisnis & Value Proposition
